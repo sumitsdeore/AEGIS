@@ -1,0 +1,71 @@
+{
+  "name": "aegis",
+  "displayName": "AEGIS",
+  "description": "Developer intelligence for predicting Java and Spring Boot code change impact before refactoring.",
+  "version": "0.1.0",
+  "publisher": "aegis-devtools",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "java",
+    "spring",
+    "spring-boot",
+    "static-analysis",
+    "refactoring",
+    "dependency-graph"
+  ],
+  "activationEvents": [
+    "onCommand:aegis.analyzeProject",
+    "onCommand:aegis.showImpactGraph"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aegis.analyzeProject",
+        "title": "AEGIS: Analyze Project",
+        "category": "AEGIS"
+      },
+      {
+        "command": "aegis.showImpactGraph",
+        "title": "AEGIS: Show Impact Graph",
+        "category": "AEGIS"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aegis.analyzeProject"
+        },
+        {
+          "command": "aegis.showImpactGraph"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "pretest": "npm run compile",
+    "test": "node ./dist/test/smoke.test.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.92.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vscode/vsce": "^3.0.0",
+    "eslint": "^9.8.0",
+    "typescript": "^5.5.4"
+  }
+}
