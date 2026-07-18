@@ -14,7 +14,13 @@ public final class CliParser {
             return CliRequest.help();
         }
 
-        if (!commandToken.equals("analyze")) {
+        AnalyzerCommand command = switch (commandToken) {
+            case "analyze" -> AnalyzerCommand.ANALYZE;
+            case "graph" -> AnalyzerCommand.GRAPH;
+            default -> throw new CliParseException("Unknown command '%s'.".formatted(args[0]));
+        };
+
+        if (command != AnalyzerCommand.ANALYZE && command != AnalyzerCommand.GRAPH) {
             throw new CliParseException("Unknown command '%s'.".formatted(args[0]));
         }
 
@@ -42,6 +48,10 @@ public final class CliParser {
 
         if (projectPath == null) {
             throw new CliParseException("Missing required option '--project <path>'.");
+        }
+
+        if (command == AnalyzerCommand.GRAPH) {
+            return CliRequest.graph(projectPath, outputFormat);
         }
 
         return CliRequest.analyze(projectPath, outputFormat);

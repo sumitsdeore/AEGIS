@@ -3,7 +3,7 @@ package dev.aegis.analyzer;
 import dev.aegis.analyzer.cli.CliParser;
 import dev.aegis.analyzer.core.AnalysisStatus;
 import dev.aegis.analyzer.core.AnalyzerApplicationService;
-import dev.aegis.analyzer.core.AnalyzerResponse;
+import dev.aegis.analyzer.core.AnalysisResponse;
 import dev.aegis.analyzer.exporter.JsonResponseWriter;
 import dev.aegis.analyzer.graph.ParsedModelDependencyGraphBuilder;
 import dev.aegis.analyzer.parser.JavaParserSourceParser;
@@ -21,7 +21,7 @@ public final class AegisAnalyzerApplication {
                 new ParsedModelDependencyGraphBuilder()
         );
         JsonResponseWriter responseWriter = JsonResponseWriter.createDefault();
-        AnalyzerResponse response = applicationService.execute(args);
+        AnalysisResponse response = applicationService.execute(args);
 
         System.out.println(responseWriter.write(response));
         System.exit(response.status() == AnalysisStatus.SUCCESS ? 0 : 1);

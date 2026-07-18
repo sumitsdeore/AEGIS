@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 public final class AnalyzerApplicationService {
-    private static final String USAGE = "Usage: analyze --project <path> [--format json]";
+    private static final String USAGE = "Usage: analyze --project <path> [--format json] | graph --project <path> [--format json]";
 
     private final CliParser cliParser;
     private final ProjectScanner projectScanner;
@@ -38,7 +38,7 @@ public final class AnalyzerApplicationService {
         this.dependencyGraphBuilder = Objects.requireNonNull(dependencyGraphBuilder, "dependencyGraphBuilder must not be null");
     }
 
-    public AnalyzerResponse execute(String[] args) {
+    public AnalysisResponse execute(String[] args) {
         try {
             CliRequest request = cliParser.parse(args);
             if (request.command() == AnalyzerCommand.HELP) {
@@ -54,35 +54,41 @@ public final class AnalyzerApplicationService {
 
             Path projectPath = request.projectPath().orElseThrow(() ->
                     new CliParseException("Missing required option '--project <path>'."));
-            ProjectScanResult scanResult = projectScanner.scan(projectPath);
-            ParsedProject parsedProject = javaSourceParser.parse(Path.of(scanResult.projectPath()), scanResult.sourceRoots());
-            DependencyGraph dependencyGraph = dependencyGraphBuilder.build(parsedProject);
+            AnalysisArtifacts artifacts = analyzeProject(projectPath);
+
+            if (request.command() == AnalyzerCommand.GRAPH) {
+                return GraphExportResponse.success(
+                        "Dependency graph exported.",
+                        artifacts.dependencyGraph(),
+                        graphDiagnostics(artifacts)
+                );
+            }
 
             List<Diagnostic> diagnostics = new ArrayList<>();
             diagnostics.add(Diagnostic.info("Project scan completed."));
-            diagnostics.addAll(scanResult.diagnostics());
+            diagnostics.addAll(artifacts.scanResult().diagnostics());
             diagnostics.add(Diagnostic.info(
                     "Parsed %d Java file(s), %d type(s), %d method(s), and %d field(s).".formatted(
-                            parsedProject.fileCount(),
-                            parsedProject.typeCount(),
-                            parsedProject.methodCount(),
-                            parsedProject.fieldCount()
+                            artifacts.parsedProject().fileCount(),
+                            artifacts.parsedProject().typeCount(),
+                            artifacts.parsedProject().methodCount(),
+                            artifacts.parsedProject().fieldCount()
                     )
             ));
             diagnostics.add(Diagnostic.info(
                     "Built dependency graph with %d node(s) and %d edge(s).".formatted(
-                            dependencyGraph.nodeCount(),
-                            dependencyGraph.edgeCount()
+                            artifacts.dependencyGraph().nodeCount(),
+                            artifacts.dependencyGraph().edgeCount()
                     )
             ));
-            diagnostics.addAll(parsedProject.diagnostics().stream().map(this::toDiagnostic).toList());
+            diagnostics.addAll(artifacts.parsedProject().diagnostics().stream().map(this::toDiagnostic).toList());
 
             return AnalyzerResponse.success(
                     "analyze",
                     "Project accepted for analysis.",
-                    scanResult,
-                    parsedProject,
-                    dependencyGraph,
+                    artifacts.scanResult(),
+                    artifacts.parsedProject(),
+                    artifacts.dependencyGraph(),
                     diagnostics
             );
         } catch (CliParseException exception) {
@@ -100,6 +106,28 @@ public final class AnalyzerApplicationService {
         }
     }
 
+    private AnalysisArtifacts analyzeProject(Path projectPath) {
+        ProjectScanResult scanResult = projectScanner.scan(projectPath);
+        ParsedProject parsedProject = javaSourceParser.parse(Path.of(scanResult.projectPath()), scanResult.sourceRoots());
+        DependencyGraph dependencyGraph = dependencyGraphBuilder.build(parsedProject);
+
+        return new AnalysisArtifacts(scanResult, parsedProject, dependencyGraph);
+    }
+
+    private List<Diagnostic> graphDiagnostics(AnalysisArtifacts artifacts) {
+        List<Diagnostic> diagnostics = new ArrayList<>();
+        diagnostics.add(Diagnostic.info("Project scan completed."));
+        diagnostics.addAll(artifacts.scanResult().diagnostics());
+        diagnostics.add(Diagnostic.info(
+                "Exported dependency graph with %d node(s) and %d edge(s).".formatted(
+                        artifacts.dependencyGraph().nodeCount(),
+                        artifacts.dependencyGraph().edgeCount()
+                )
+        ));
+        diagnostics.addAll(artifacts.parsedProject().diagnostics().stream().map(this::toDiagnostic).toList());
+        return diagnostics;
+    }
+
     private Diagnostic toDiagnostic(ParseDiagnostic parseDiagnostic) {
         String location = parseDiagnostic.sourcePath().isBlank()
                 ? ""
@@ -111,5 +139,17 @@ public final class AnalyzerApplicationService {
             case WARNING -> Diagnostic.warning(message);
             case ERROR -> Diagnostic.error(message);
         };
+    }
+
+    private record AnalysisArtifacts(
+            ProjectScanResult scanResult,
+            ParsedProject parsedProject,
+            DependencyGraph dependencyGraph
+    ) {
+        private AnalysisArtifacts {
+            Objects.requireNonNull(scanResult, "scanResult must not be null");
+            Objects.requireNonNull(parsedProject, "parsedProject must not be null");
+            Objects.requireNonNull(dependencyGraph, "dependencyGraph must not be null");
+        }
     }
 }

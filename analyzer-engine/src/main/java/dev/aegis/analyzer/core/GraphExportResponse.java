@@ -1,52 +1,40 @@
 package dev.aegis.analyzer.core;
 
 import dev.aegis.analyzer.graph.DependencyGraph;
-import dev.aegis.analyzer.parser.ParsedProject;
-import dev.aegis.analyzer.scanner.ProjectScanResult;
 
 import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 
-public record AnalyzerResponse(
+public record GraphExportResponse(
         AnalysisStatus status,
         String command,
         String message,
         Instant generatedAt,
-        ProjectScanResult project,
-        ParsedProject parsedProject,
         DependencyGraph dependencyGraph,
         List<Diagnostic> diagnostics
 ) implements AnalysisResponse {
-    public AnalyzerResponse {
+    public GraphExportResponse {
         Objects.requireNonNull(status, "status must not be null");
         Objects.requireNonNull(command, "command must not be null");
         Objects.requireNonNull(message, "message must not be null");
         Objects.requireNonNull(generatedAt, "generatedAt must not be null");
+        Objects.requireNonNull(dependencyGraph, "dependencyGraph must not be null");
         diagnostics = List.copyOf(Objects.requireNonNull(diagnostics, "diagnostics must not be null"));
     }
 
-    public static AnalyzerResponse success(
-            String command,
+    public static GraphExportResponse success(
             String message,
-            ProjectScanResult project,
-            ParsedProject parsedProject,
             DependencyGraph dependencyGraph,
             List<Diagnostic> diagnostics
     ) {
-        return new AnalyzerResponse(
+        return new GraphExportResponse(
                 AnalysisStatus.SUCCESS,
-                command,
+                "graph",
                 message,
                 Instant.now(),
-                project,
-                parsedProject,
                 dependencyGraph,
                 diagnostics
         );
-    }
-
-    public static AnalyzerResponse error(String command, String message, List<Diagnostic> diagnostics) {
-        return new AnalyzerResponse(AnalysisStatus.ERROR, command, message, Instant.now(), null, null, null, diagnostics);
     }
 }

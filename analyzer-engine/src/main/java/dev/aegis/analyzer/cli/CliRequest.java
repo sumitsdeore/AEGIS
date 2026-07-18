@@ -23,6 +23,14 @@ public record CliRequest(
         );
     }
 
+    public static CliRequest graph(Path projectPath, OutputFormat outputFormat) {
+        return new CliRequest(
+                AnalyzerCommand.GRAPH,
+                Optional.of(Objects.requireNonNull(projectPath, "projectPath must not be null")),
+                Objects.requireNonNull(outputFormat, "outputFormat must not be null")
+        );
+    }
+
     public static CliRequest help() {
         return new CliRequest(AnalyzerCommand.HELP, Optional.empty(), OutputFormat.JSON);
     }

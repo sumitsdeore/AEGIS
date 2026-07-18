@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import dev.aegis.analyzer.core.AnalyzerResponse;
+import dev.aegis.analyzer.core.AnalysisResponse;
 
 import java.util.Objects;
 
@@ -23,7 +23,7 @@ public final class JsonResponseWriter {
         return new JsonResponseWriter(mapper);
     }
 
-    public String write(AnalyzerResponse response) {
+    public String write(AnalysisResponse response) {
         try {
             return objectMapper.writeValueAsString(response);
         } catch (JsonProcessingException exception) {
