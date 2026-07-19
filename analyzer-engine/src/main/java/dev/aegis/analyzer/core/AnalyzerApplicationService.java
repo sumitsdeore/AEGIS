@@ -39,8 +39,10 @@ public final class AnalyzerApplicationService {
     }
 
     public AnalysisResponse execute(String[] args) {
+        String commandName = "unknown";
         try {
             CliRequest request = cliParser.parse(args);
+            commandName = request.command().name().toLowerCase();
             if (request.command() == AnalyzerCommand.HELP) {
                 return AnalyzerResponse.success(
                         "help",
@@ -99,7 +101,7 @@ public final class AnalyzerApplicationService {
             );
         } catch (ProjectScanException exception) {
             return AnalyzerResponse.error(
-                    "analyze",
+                    commandName,
                     exception.getMessage(),
                     List.of(Diagnostic.error(exception.getMessage()))
             );

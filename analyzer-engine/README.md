@@ -19,4 +19,8 @@ It currently supports:
 mvn test
 mvn package
 java -jar target/aegis-analyzer-engine-0.1.0-SNAPSHOT.jar analyze --project /path/to/project
+java -jar target/aegis-analyzer-engine-0.1.0-SNAPSHOT.jar graph --project /path/to/project
 ```
+
+`analyze` returns the project scan, parsed source model, dependency graph, and diagnostics.
+`graph` returns only the dependency graph and diagnostics, which keeps the JSON payload focused for visualization consumers.

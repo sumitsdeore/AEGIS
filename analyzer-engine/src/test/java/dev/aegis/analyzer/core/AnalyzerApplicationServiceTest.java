@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
@@ -30,13 +31,39 @@ class AnalyzerApplicationServiceTest {
                 parsedProject -> DependencyGraph.of(parsedProject.projectPath(), List.of(), List.of())
         );
 
-        AnalyzerResponse response = service.execute(new String[]{"analyze", "--project", "."});
+        AnalysisResponse response = service.execute(new String[]{"analyze", "--project", "."});
+        AnalyzerResponse analyzeResponse = assertInstanceOf(AnalyzerResponse.class, response);
 
-        assertEquals(AnalysisStatus.SUCCESS, response.status());
-        assertNotNull(response.project());
-        assertNotNull(response.parsedProject());
-        assertNotNull(response.dependencyGraph());
-        assertEquals(4, response.diagnostics().size());
+        assertEquals(AnalysisStatus.SUCCESS, analyzeResponse.status());
+        assertNotNull(analyzeResponse.project());
+        assertNotNull(analyzeResponse.parsedProject());
+        assertNotNull(analyzeResponse.dependencyGraph());
+        assertEquals(4, analyzeResponse.diagnostics().size());
+    }
+
+    @Test
+    void returnsGraphOnlyResponseForValidGraphRequest() {
+        ProjectScanner scanner = projectPath -> new ProjectScanResult(
+                projectPath.toString(),
+                BuildTool.MAVEN,
+                List.of("src/main/java"),
+                List.of(Diagnostic.info("Detected build tool: MAVEN."))
+        );
+        AnalyzerApplicationService service = new AnalyzerApplicationService(
+                new CliParser(),
+                scanner,
+                (projectPath, sourceRoots) -> ParsedProject.fromFiles(projectPath.toString(), List.of(), List.of()),
+                parsedProject -> DependencyGraph.of(parsedProject.projectPath(), List.of(), List.of())
+        );
+
+        AnalysisResponse response = service.execute(new String[]{"graph", "--project", "."});
+        GraphExportResponse graphResponse = assertInstanceOf(GraphExportResponse.class, response);
+
+        assertEquals(AnalysisStatus.SUCCESS, graphResponse.status());
+        assertEquals("graph", graphResponse.command());
+        assertEquals("Dependency graph exported.", graphResponse.message());
+        assertNotNull(graphResponse.dependencyGraph());
+        assertEquals(3, graphResponse.diagnostics().size());
     }
 
     @Test
@@ -54,12 +81,13 @@ class AnalyzerApplicationServiceTest {
                 }
         );
 
-        AnalyzerResponse response = service.execute(new String[]{"analyze"});
+        AnalysisResponse response = service.execute(new String[]{"analyze"});
+        AnalyzerResponse errorResponse = assertInstanceOf(AnalyzerResponse.class, response);
 
-        assertEquals(AnalysisStatus.ERROR, response.status());
-        assertEquals("unknown", response.command());
-        assertNull(response.project());
-        assertNull(response.parsedProject());
-        assertNull(response.dependencyGraph());
+        assertEquals(AnalysisStatus.ERROR, errorResponse.status());
+        assertEquals("unknown", errorResponse.command());
+        assertNull(errorResponse.project());
+        assertNull(errorResponse.parsedProject());
+        assertNull(errorResponse.dependencyGraph());
     }
 }

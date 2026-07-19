@@ -34,3 +34,5 @@ Milestone 2 provides the standalone Java analyzer engine foundation in `analyzer
 Milestone 3 adds JavaParser-based Java source parsing to the analyzer engine.
 
 Milestone 4 adds deterministic dependency graph generation from the parsed source model.
+
+Milestone 5 adds a graph-only JSON export command for graph visualization consumers.

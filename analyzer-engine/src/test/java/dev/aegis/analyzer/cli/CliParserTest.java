@@ -22,6 +22,16 @@ class CliParserTest {
     }
 
     @Test
+    void parsesGraphCommandWithProjectPath() {
+        CliRequest request = parser.parse(new String[]{"graph", "--project", "."});
+
+        assertEquals(AnalyzerCommand.GRAPH, request.command());
+        assertTrue(request.projectPath().isPresent());
+        assertEquals(Path.of(".").toAbsolutePath().normalize(), request.projectPath().orElseThrow());
+        assertEquals(OutputFormat.JSON, request.outputFormat());
+    }
+
+    @Test
     void parsesHelpCommand() {
         CliRequest request = parser.parse(new String[]{"help"});
 

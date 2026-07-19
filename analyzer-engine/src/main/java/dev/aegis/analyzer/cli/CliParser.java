@@ -20,10 +20,6 @@ public final class CliParser {
             default -> throw new CliParseException("Unknown command '%s'.".formatted(args[0]));
         };
 
-        if (command != AnalyzerCommand.ANALYZE && command != AnalyzerCommand.GRAPH) {
-            throw new CliParseException("Unknown command '%s'.".formatted(args[0]));
-        }
-
         Path projectPath = null;
         OutputFormat outputFormat = OutputFormat.JSON;
 
