@@ -6,6 +6,14 @@
   "publisher": "aegis-devtools",
   "license": "MIT",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sumitsdeore/AEGIS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sumitsdeore/AEGIS/issues"
+  },
+  "homepage": "https://github.com/sumitsdeore/AEGIS#readme",
   "engines": {
     "vscode": "^1.92.0"
   },
@@ -48,6 +56,17 @@
           "command": "aegis.showImpactGraph"
         }
       ]
+    },
+    "configuration": {
+      "title": "AEGIS",
+      "properties": {
+        "aegis.analyzer.jarPath": {
+          "type": "string",
+          "default": "",
+          "scope": "window",
+          "description": "Optional path to the AEGIS analyzer JAR. Relative paths are resolved from the workspace folder."
+        }
+      }
     }
   },
   "scripts": {
@@ -56,7 +75,8 @@
     "lint": "eslint src --ext ts",
     "pretest": "npm run compile",
     "test": "node ./dist/test/smoke.test.js",
-    "package": "vsce package"
+    "stage-analyzer": "node ./scripts/stage-analyzer.mjs",
+    "package": "npm run compile && npm run stage-analyzer && vsce package"
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",

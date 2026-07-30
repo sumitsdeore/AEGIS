@@ -9,7 +9,7 @@ import { VsCodeWorkspaceService } from "./services/workspaceService";
 export function activate(context: vscode.ExtensionContext): void {
   const logger = new OutputChannelLogger("AEGIS");
   const workspaceService = new VsCodeWorkspaceService();
-  const analyzerService = new LocalAnalyzerService();
+  const analyzerService = new LocalAnalyzerService(context, logger);
 
   context.subscriptions.push(logger);
 

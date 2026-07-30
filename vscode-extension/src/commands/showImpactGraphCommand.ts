@@ -27,7 +27,16 @@ export function registerShowImpactGraphCommand(
         workspacePath: workspaceRoot.fsPath
       });
 
-      await vscode.window.showInformationMessage(result.message, "Show Logs").then((selection) => {
+      if (result.status === "success" && result.dependencyGraph) {
+        logger.info(
+          `Dependency graph ready: ${result.dependencyGraph.nodeCount} node(s), ${result.dependencyGraph.edgeCount} edge(s).`
+        );
+      }
+
+      const showMessage = result.status === "success"
+        ? vscode.window.showInformationMessage
+        : vscode.window.showErrorMessage;
+      await showMessage(result.message, "Show Logs").then((selection) => {
         if (selection === "Show Logs") {
           logger.show();
         }

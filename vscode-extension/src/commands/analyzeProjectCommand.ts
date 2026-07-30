@@ -27,11 +27,10 @@ export function registerAnalyzeProjectCommand(
         workspacePath: workspaceRoot.fsPath
       });
 
-      for (const diagnostic of result.diagnostics) {
-        logger.info(`${diagnostic.severity.toUpperCase()}: ${diagnostic.message}`);
-      }
-
-      await vscode.window.showInformationMessage(result.message, "Show Logs").then((selection) => {
+      const showMessage = result.status === "success"
+        ? vscode.window.showInformationMessage
+        : vscode.window.showErrorMessage;
+      await showMessage(result.message, "Show Logs").then((selection) => {
         if (selection === "Show Logs") {
           logger.show();
         }

@@ -4,5 +4,6 @@ out/
 target/
 coverage/
 *.vsix
+vscode-extension/resources/analyzer/*.jar
 .DS_Store
 .vscode-test/

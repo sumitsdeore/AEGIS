@@ -7,4 +7,6 @@ coverage/**
 .gitignore
 eslint.config.mjs
 tsconfig.json
-*.map
+scripts/**
+dist/**/*.map
+dist/test/**

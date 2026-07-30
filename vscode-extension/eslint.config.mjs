@@ -19,8 +19,11 @@ export default [
         sourceType: "module"
       },
       globals: {
+        Buffer: "readonly",
+        clearTimeout: "readonly",
         console: "readonly",
-        process: "readonly"
+        process: "readonly",
+        setTimeout: "readonly"
       }
     },
     plugins: {
