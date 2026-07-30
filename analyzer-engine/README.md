@@ -20,7 +20,9 @@ mvn test
 mvn package
 java -jar target/aegis-analyzer-engine-0.1.0-SNAPSHOT.jar analyze --project /path/to/project
 java -jar target/aegis-analyzer-engine-0.1.0-SNAPSHOT.jar graph --project /path/to/project
+java -jar target/aegis-analyzer-engine-0.1.0-SNAPSHOT.jar impact --project /path/to/project --target type:com.example.orders.OrderService
 ```
 
 `analyze` returns the project scan, parsed source model, dependency graph, and diagnostics.
 `graph` returns only the dependency graph and diagnostics, which keeps the JSON payload focused for visualization consumers.
+`impact` traverses reverse dependency relationships from a graph node ID or unique qualified name and returns direct and indirect dependents, explainable paths, Spring-layer groups, and impacted packages.

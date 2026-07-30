@@ -32,6 +32,17 @@ class CliParserTest {
     }
 
     @Test
+    void parsesImpactCommandWithTargetAndDepth() {
+        CliRequest request = parser.parse(new String[]{
+                "impact", "--project", ".", "--target", "type:com.example.demo.OrderService", "--max-depth", "4"
+        });
+
+        assertEquals(AnalyzerCommand.IMPACT, request.command());
+        assertEquals("type:com.example.demo.OrderService", request.target().orElseThrow());
+        assertEquals(4, request.maxDepth());
+    }
+
+    @Test
     void parsesHelpCommand() {
         CliRequest request = parser.parse(new String[]{"help"});
 
@@ -47,5 +58,15 @@ class CliParserTest {
         );
 
         assertEquals("Missing required option '--project <path>'.", exception.getMessage());
+    }
+
+    @Test
+    void rejectsImpactCommandWithoutTarget() {
+        CliParseException exception = assertThrows(
+                CliParseException.class,
+                () -> parser.parse(new String[]{"impact", "--project", "."})
+        );
+
+        assertEquals("Missing required option '--target <node-id-or-qualified-name>'.", exception.getMessage());
     }
 }

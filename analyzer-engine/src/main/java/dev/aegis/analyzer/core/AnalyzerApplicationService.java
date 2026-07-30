@@ -6,6 +6,10 @@ import dev.aegis.analyzer.cli.CliParser;
 import dev.aegis.analyzer.cli.CliRequest;
 import dev.aegis.analyzer.graph.DependencyGraph;
 import dev.aegis.analyzer.graph.DependencyGraphBuilder;
+import dev.aegis.analyzer.impact.GraphImpactAnalyzer;
+import dev.aegis.analyzer.impact.ImpactAnalysis;
+import dev.aegis.analyzer.impact.ImpactAnalysisException;
+import dev.aegis.analyzer.impact.ImpactAnalyzer;
 import dev.aegis.analyzer.parser.JavaSourceParser;
 import dev.aegis.analyzer.parser.ParseDiagnostic;
 import dev.aegis.analyzer.parser.ParsedProject;
@@ -19,12 +23,13 @@ import java.util.List;
 import java.util.Objects;
 
 public final class AnalyzerApplicationService {
-    private static final String USAGE = "Usage: analyze --project <path> [--format json] | graph --project <path> [--format json]";
+    private static final String USAGE = "Usage: analyze --project <path> [--format json] | graph --project <path> [--format json] | impact --project <path> --target <node-id-or-qualified-name> [--max-depth <positive-integer>] [--format json]";
 
     private final CliParser cliParser;
     private final ProjectScanner projectScanner;
     private final JavaSourceParser javaSourceParser;
     private final DependencyGraphBuilder dependencyGraphBuilder;
+    private final ImpactAnalyzer impactAnalyzer;
 
     public AnalyzerApplicationService(
             CliParser cliParser,
@@ -32,10 +37,21 @@ public final class AnalyzerApplicationService {
             JavaSourceParser javaSourceParser,
             DependencyGraphBuilder dependencyGraphBuilder
     ) {
+        this(cliParser, projectScanner, javaSourceParser, dependencyGraphBuilder, new GraphImpactAnalyzer());
+    }
+
+    public AnalyzerApplicationService(
+            CliParser cliParser,
+            ProjectScanner projectScanner,
+            JavaSourceParser javaSourceParser,
+            DependencyGraphBuilder dependencyGraphBuilder,
+            ImpactAnalyzer impactAnalyzer
+    ) {
         this.cliParser = Objects.requireNonNull(cliParser, "cliParser must not be null");
         this.projectScanner = Objects.requireNonNull(projectScanner, "projectScanner must not be null");
         this.javaSourceParser = Objects.requireNonNull(javaSourceParser, "javaSourceParser must not be null");
         this.dependencyGraphBuilder = Objects.requireNonNull(dependencyGraphBuilder, "dependencyGraphBuilder must not be null");
+        this.impactAnalyzer = Objects.requireNonNull(impactAnalyzer, "impactAnalyzer must not be null");
     }
 
     public AnalysisResponse execute(String[] args) {
@@ -64,6 +80,15 @@ public final class AnalyzerApplicationService {
                         artifacts.dependencyGraph(),
                         graphDiagnostics(artifacts)
                 );
+            }
+
+            if (request.command() == AnalyzerCommand.IMPACT) {
+                ImpactAnalysis impactAnalysis = impactAnalyzer.analyze(
+                        artifacts.dependencyGraph(),
+                        request.target().orElseThrow(() -> new CliParseException("Missing required option '--target <node-id-or-qualified-name>'.")),
+                        request.maxDepth()
+                );
+                return ImpactAnalysisResponse.success(impactAnalysis, impactDiagnostics(artifacts, impactAnalysis));
             }
 
             List<Diagnostic> diagnostics = new ArrayList<>();
@@ -105,6 +130,12 @@ public final class AnalyzerApplicationService {
                     exception.getMessage(),
                     List.of(Diagnostic.error(exception.getMessage()))
             );
+        } catch (ImpactAnalysisException exception) {
+            return AnalyzerResponse.error(
+                    commandName,
+                    exception.getMessage(),
+                    List.of(Diagnostic.error(exception.getMessage()))
+            );
         }
     }
 
@@ -127,6 +158,17 @@ public final class AnalyzerApplicationService {
                 )
         ));
         diagnostics.addAll(artifacts.parsedProject().diagnostics().stream().map(this::toDiagnostic).toList());
+        return diagnostics;
+    }
+
+    private List<Diagnostic> impactDiagnostics(AnalysisArtifacts artifacts, ImpactAnalysis impactAnalysis) {
+        List<Diagnostic> diagnostics = new ArrayList<>(graphDiagnostics(artifacts));
+        diagnostics.add(Diagnostic.info(
+                "Impact analysis found %d direct and %d indirect dependent node(s).".formatted(
+                        impactAnalysis.summary().directDependentCount(),
+                        impactAnalysis.summary().indirectDependentCount()
+                )
+        ));
         return diagnostics;
     }
 

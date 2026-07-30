@@ -2,6 +2,10 @@ package dev.aegis.analyzer.core;
 
 import dev.aegis.analyzer.cli.CliParser;
 import dev.aegis.analyzer.graph.DependencyGraph;
+import dev.aegis.analyzer.graph.GraphNode;
+import dev.aegis.analyzer.graph.NodeKind;
+import dev.aegis.analyzer.impact.ImpactAnalysis;
+import dev.aegis.analyzer.impact.ImpactSummary;
 import dev.aegis.analyzer.parser.ParsedProject;
 import dev.aegis.analyzer.scanner.BuildTool;
 import dev.aegis.analyzer.scanner.ProjectScanResult;
@@ -9,6 +13,7 @@ import dev.aegis.analyzer.scanner.ProjectScanner;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
@@ -64,6 +69,41 @@ class AnalyzerApplicationServiceTest {
         assertEquals("Dependency graph exported.", graphResponse.message());
         assertNotNull(graphResponse.dependencyGraph());
         assertEquals(3, graphResponse.diagnostics().size());
+    }
+
+    @Test
+    void returnsImpactResponseForValidImpactRequest() {
+        GraphNode serviceNode = GraphNode.typeNode(
+                "com.example.orders.OrderService",
+                "OrderService",
+                NodeKind.TYPE,
+                "com.example.orders",
+                "src/main/java/com/example/orders/OrderService.java",
+                Map.of()
+        );
+        ProjectScanner scanner = projectPath -> new ProjectScanResult(
+                projectPath.toString(), BuildTool.MAVEN, List.of("src/main/java"), List.of()
+        );
+        AnalyzerApplicationService service = new AnalyzerApplicationService(
+                new CliParser(),
+                scanner,
+                (projectPath, sourceRoots) -> ParsedProject.fromFiles(projectPath.toString(), List.of(), List.of()),
+                parsedProject -> DependencyGraph.of(parsedProject.projectPath(), List.of(serviceNode), List.of()),
+                (graph, target, maxDepth) -> new ImpactAnalysis(
+                        serviceNode, List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                        new ImpactSummary(0, 0, 0, 0, 0, 0, 0)
+                )
+        );
+
+        AnalysisResponse response = service.execute(new String[]{
+                "impact", "--project", ".", "--target", serviceNode.id()
+        });
+        ImpactAnalysisResponse impactResponse = assertInstanceOf(ImpactAnalysisResponse.class, response);
+
+        assertEquals(AnalysisStatus.SUCCESS, impactResponse.status());
+        assertEquals("impact", impactResponse.command());
+        assertEquals(serviceNode.id(), impactResponse.impactAnalysis().target().id());
+        assertEquals(3, impactResponse.diagnostics().size());
     }
 
     @Test
