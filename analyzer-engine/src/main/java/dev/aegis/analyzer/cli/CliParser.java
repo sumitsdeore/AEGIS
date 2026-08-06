@@ -18,6 +18,7 @@ public final class CliParser {
             case "analyze" -> AnalyzerCommand.ANALYZE;
             case "graph" -> AnalyzerCommand.GRAPH;
             case "impact" -> AnalyzerCommand.IMPACT;
+            case "risk" -> AnalyzerCommand.RISK;
             default -> throw new CliParseException("Unknown command '%s'.".formatted(args[0]));
         };
 
@@ -65,6 +66,12 @@ public final class CliParser {
                     throw new CliParseException("Missing required option '--target <node-id-or-qualified-name>'.");
                 }
                 yield CliRequest.impact(projectPath, outputFormat, target, maxDepth);
+            }
+            case RISK -> {
+                if (target == null || target.isBlank()) {
+                    throw new CliParseException("Missing required option '--target <node-id-or-qualified-name>'.");
+                }
+                yield CliRequest.risk(projectPath, outputFormat, target, maxDepth);
             }
             case HELP -> throw new CliParseException("Help command does not accept options.");
         };

@@ -13,6 +13,9 @@ import dev.aegis.analyzer.impact.ImpactAnalyzer;
 import dev.aegis.analyzer.parser.JavaSourceParser;
 import dev.aegis.analyzer.parser.ParseDiagnostic;
 import dev.aegis.analyzer.parser.ParsedProject;
+import dev.aegis.analyzer.risk.DeterministicRiskCalculator;
+import dev.aegis.analyzer.risk.RiskAssessment;
+import dev.aegis.analyzer.risk.RiskCalculator;
 import dev.aegis.analyzer.scanner.ProjectScanException;
 import dev.aegis.analyzer.scanner.ProjectScanResult;
 import dev.aegis.analyzer.scanner.ProjectScanner;
@@ -23,13 +26,14 @@ import java.util.List;
 import java.util.Objects;
 
 public final class AnalyzerApplicationService {
-    private static final String USAGE = "Usage: analyze --project <path> [--format json] | graph --project <path> [--format json] | impact --project <path> --target <node-id-or-qualified-name> [--max-depth <positive-integer>] [--format json]";
+    private static final String USAGE = "Usage: analyze --project <path> [--format json] | graph --project <path> [--format json] | impact --project <path> --target <node-id-or-qualified-name> [--max-depth <positive-integer>] [--format json] | risk --project <path> --target <node-id-or-qualified-name> [--max-depth <positive-integer>] [--format json]";
 
     private final CliParser cliParser;
     private final ProjectScanner projectScanner;
     private final JavaSourceParser javaSourceParser;
     private final DependencyGraphBuilder dependencyGraphBuilder;
     private final ImpactAnalyzer impactAnalyzer;
+    private final RiskCalculator riskCalculator;
 
     public AnalyzerApplicationService(
             CliParser cliParser,
@@ -37,7 +41,7 @@ public final class AnalyzerApplicationService {
             JavaSourceParser javaSourceParser,
             DependencyGraphBuilder dependencyGraphBuilder
     ) {
-        this(cliParser, projectScanner, javaSourceParser, dependencyGraphBuilder, new GraphImpactAnalyzer());
+        this(cliParser, projectScanner, javaSourceParser, dependencyGraphBuilder, new GraphImpactAnalyzer(), new DeterministicRiskCalculator());
     }
 
     public AnalyzerApplicationService(
@@ -47,11 +51,23 @@ public final class AnalyzerApplicationService {
             DependencyGraphBuilder dependencyGraphBuilder,
             ImpactAnalyzer impactAnalyzer
     ) {
+        this(cliParser, projectScanner, javaSourceParser, dependencyGraphBuilder, impactAnalyzer, new DeterministicRiskCalculator());
+    }
+
+    public AnalyzerApplicationService(
+            CliParser cliParser,
+            ProjectScanner projectScanner,
+            JavaSourceParser javaSourceParser,
+            DependencyGraphBuilder dependencyGraphBuilder,
+            ImpactAnalyzer impactAnalyzer,
+            RiskCalculator riskCalculator
+    ) {
         this.cliParser = Objects.requireNonNull(cliParser, "cliParser must not be null");
         this.projectScanner = Objects.requireNonNull(projectScanner, "projectScanner must not be null");
         this.javaSourceParser = Objects.requireNonNull(javaSourceParser, "javaSourceParser must not be null");
         this.dependencyGraphBuilder = Objects.requireNonNull(dependencyGraphBuilder, "dependencyGraphBuilder must not be null");
         this.impactAnalyzer = Objects.requireNonNull(impactAnalyzer, "impactAnalyzer must not be null");
+        this.riskCalculator = Objects.requireNonNull(riskCalculator, "riskCalculator must not be null");
     }
 
     public AnalysisResponse execute(String[] args) {
@@ -83,12 +99,14 @@ public final class AnalyzerApplicationService {
             }
 
             if (request.command() == AnalyzerCommand.IMPACT) {
-                ImpactAnalysis impactAnalysis = impactAnalyzer.analyze(
-                        artifacts.dependencyGraph(),
-                        request.target().orElseThrow(() -> new CliParseException("Missing required option '--target <node-id-or-qualified-name>'.")),
-                        request.maxDepth()
-                );
+                ImpactAnalysis impactAnalysis = analyzeImpact(artifacts.dependencyGraph(), request);
                 return ImpactAnalysisResponse.success(impactAnalysis, impactDiagnostics(artifacts, impactAnalysis));
+            }
+
+            if (request.command() == AnalyzerCommand.RISK) {
+                ImpactAnalysis impactAnalysis = analyzeImpact(artifacts.dependencyGraph(), request);
+                RiskAssessment riskAssessment = riskCalculator.calculate(impactAnalysis);
+                return RiskAssessmentResponse.success(riskAssessment, riskDiagnostics(artifacts, riskAssessment));
             }
 
             List<Diagnostic> diagnostics = new ArrayList<>();
@@ -168,6 +186,22 @@ public final class AnalyzerApplicationService {
                         impactAnalysis.summary().directDependentCount(),
                         impactAnalysis.summary().indirectDependentCount()
                 )
+        ));
+        return diagnostics;
+    }
+
+    private ImpactAnalysis analyzeImpact(DependencyGraph dependencyGraph, CliRequest request) {
+        return impactAnalyzer.analyze(
+                dependencyGraph,
+                request.target().orElseThrow(() -> new CliParseException("Missing required option '--target <node-id-or-qualified-name>'.")),
+                request.maxDepth()
+        );
+    }
+
+    private List<Diagnostic> riskDiagnostics(AnalysisArtifacts artifacts, RiskAssessment riskAssessment) {
+        List<Diagnostic> diagnostics = new ArrayList<>(graphDiagnostics(artifacts));
+        diagnostics.add(Diagnostic.info(
+                "Risk score is %d/100 (%s).".formatted(riskAssessment.score(), riskAssessment.level())
         ));
         return diagnostics;
     }

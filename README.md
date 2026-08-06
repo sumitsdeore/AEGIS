@@ -38,3 +38,5 @@ Milestone 4 adds deterministic dependency graph generation from the parsed sourc
 Milestone 5 adds a graph-only JSON export command for graph visualization consumers.
 
 Milestone 7 adds deterministic reverse dependency traversal for impact analysis.
+
+Milestone 8 adds explainable, deterministic risk scoring for graph targets.

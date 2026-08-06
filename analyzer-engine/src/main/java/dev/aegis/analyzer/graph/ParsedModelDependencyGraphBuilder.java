@@ -159,7 +159,9 @@ public final class ParsedModelDependencyGraphBuilder implements DependencyGraphB
                 type.sourcePath(),
                 Map.of(
                         "typeKind", type.kind().name(),
-                        "sourceRoot", file.sourceRoot()
+                        "sourceRoot", file.sourceRoot(),
+                        "modifiers", String.join(",", type.modifiers()),
+                        "annotations", String.join(",", type.annotations())
                 )
         ));
         addEdge(edges, GraphEdge.of(packageNodeId(file.packageName()), typeNodeId(type), EdgeKind.DECLARES, type.simpleName()));
@@ -200,7 +202,9 @@ public final class ParsedModelDependencyGraphBuilder implements DependencyGraphB
                 type.sourcePath(),
                 Map.of(
                         "returnType", method.returnType(),
-                        "parameterCount", String.valueOf(method.parameters().size())
+                        "parameterCount", String.valueOf(method.parameters().size()),
+                        "modifiers", String.join(",", method.modifiers()),
+                        "annotations", String.join(",", method.annotations())
                 )
         ));
         addEdge(edges, GraphEdge.of(typeNodeId(type), methodId, EdgeKind.HAS_METHOD, method.name()));

@@ -43,6 +43,15 @@ class CliParserTest {
     }
 
     @Test
+    void parsesRiskCommandWithTarget() {
+        CliRequest request = parser.parse(new String[]{"risk", "--project", ".", "--target", "com.example.demo.OrderService"});
+
+        assertEquals(AnalyzerCommand.RISK, request.command());
+        assertEquals("com.example.demo.OrderService", request.target().orElseThrow());
+        assertEquals(10, request.maxDepth());
+    }
+
+    @Test
     void parsesHelpCommand() {
         CliRequest request = parser.parse(new String[]{"help"});
 

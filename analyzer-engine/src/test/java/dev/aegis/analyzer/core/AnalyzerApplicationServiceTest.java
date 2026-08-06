@@ -6,6 +6,8 @@ import dev.aegis.analyzer.graph.GraphNode;
 import dev.aegis.analyzer.graph.NodeKind;
 import dev.aegis.analyzer.impact.ImpactAnalysis;
 import dev.aegis.analyzer.impact.ImpactSummary;
+import dev.aegis.analyzer.risk.RiskAssessment;
+import dev.aegis.analyzer.risk.RiskLevel;
 import dev.aegis.analyzer.parser.ParsedProject;
 import dev.aegis.analyzer.scanner.BuildTool;
 import dev.aegis.analyzer.scanner.ProjectScanResult;
@@ -104,6 +106,43 @@ class AnalyzerApplicationServiceTest {
         assertEquals("impact", impactResponse.command());
         assertEquals(serviceNode.id(), impactResponse.impactAnalysis().target().id());
         assertEquals(3, impactResponse.diagnostics().size());
+    }
+
+    @Test
+    void returnsRiskResponseForValidRiskRequest() {
+        GraphNode serviceNode = GraphNode.typeNode(
+                "com.example.orders.OrderService",
+                "OrderService",
+                NodeKind.TYPE,
+                "com.example.orders",
+                "src/main/java/com/example/orders/OrderService.java",
+                Map.of()
+        );
+        ImpactAnalysis impactAnalysis = new ImpactAnalysis(
+                serviceNode, List.of(), List.of(), List.of(), List.of(), List.of(), List.of(), List.of(),
+                new ImpactSummary(0, 0, 0, 0, 0, 0, 0)
+        );
+        ProjectScanner scanner = projectPath -> new ProjectScanResult(
+                projectPath.toString(), BuildTool.MAVEN, List.of("src/main/java"), List.of()
+        );
+        AnalyzerApplicationService service = new AnalyzerApplicationService(
+                new CliParser(),
+                scanner,
+                (projectPath, sourceRoots) -> ParsedProject.fromFiles(projectPath.toString(), List.of(), List.of()),
+                parsedProject -> DependencyGraph.of(parsedProject.projectPath(), List.of(serviceNode), List.of()),
+                (graph, target, maxDepth) -> impactAnalysis,
+                ignored -> new RiskAssessment(serviceNode, 0, RiskLevel.LOW, impactAnalysis.summary(), List.of())
+        );
+
+        AnalysisResponse response = service.execute(new String[]{
+                "risk", "--project", ".", "--target", serviceNode.id()
+        });
+        RiskAssessmentResponse riskResponse = assertInstanceOf(RiskAssessmentResponse.class, response);
+
+        assertEquals(AnalysisStatus.SUCCESS, riskResponse.status());
+        assertEquals("risk", riskResponse.command());
+        assertEquals(0, riskResponse.riskAssessment().score());
+        assertEquals(3, riskResponse.diagnostics().size());
     }
 
     @Test

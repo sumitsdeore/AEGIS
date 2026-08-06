@@ -51,6 +51,16 @@ public record CliRequest(
         );
     }
 
+    public static CliRequest risk(Path projectPath, OutputFormat outputFormat, String target, int maxDepth) {
+        return new CliRequest(
+                AnalyzerCommand.RISK,
+                Optional.of(Objects.requireNonNull(projectPath, "projectPath must not be null")),
+                Objects.requireNonNull(outputFormat, "outputFormat must not be null"),
+                Optional.of(requireTarget(target)),
+                maxDepth
+        );
+    }
+
     public static CliRequest help() {
         return new CliRequest(AnalyzerCommand.HELP, Optional.empty(), OutputFormat.JSON, Optional.empty(), 10);
     }
