@@ -10,3 +10,4 @@ tsconfig.json
 scripts/**
 dist/**/*.map
 dist/test/**
+dist/webview/**

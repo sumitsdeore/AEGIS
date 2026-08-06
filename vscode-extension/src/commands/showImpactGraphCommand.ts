@@ -2,13 +2,15 @@ import * as vscode from "vscode";
 
 import type { Logger } from "../logging/outputChannelLogger";
 import type { AnalyzerService } from "../services/analyzerService";
+import type { GraphPanel } from "../services/graphWebviewPanel";
 import type { WorkspaceService } from "../services/workspaceService";
 
 export function registerShowImpactGraphCommand(
   context: vscode.ExtensionContext,
   workspaceService: WorkspaceService,
   analyzerService: AnalyzerService,
-  logger: Logger
+  logger: Logger,
+  graphPanel: GraphPanel
 ): void {
   const disposable = vscode.commands.registerCommand("aegis.showImpactGraph", async () => {
     const workspaceRoot = workspaceService.getWorkspaceRoot();
@@ -31,12 +33,11 @@ export function registerShowImpactGraphCommand(
         logger.info(
           `Dependency graph ready: ${result.dependencyGraph.nodeCount} node(s), ${result.dependencyGraph.edgeCount} edge(s).`
         );
+        graphPanel.show(result.dependencyGraph);
+        return;
       }
 
-      const showMessage = result.status === "success"
-        ? vscode.window.showInformationMessage
-        : vscode.window.showErrorMessage;
-      await showMessage(result.message, "Show Logs").then((selection) => {
+      await vscode.window.showErrorMessage(result.message, "Show Logs").then((selection) => {
         if (selection === "Show Logs") {
           logger.show();
         }

@@ -40,3 +40,5 @@ Milestone 5 adds a graph-only JSON export command for graph visualization consum
 Milestone 7 adds deterministic reverse dependency traversal for impact analysis.
 
 Milestone 8 adds explainable, deterministic risk scoring for graph targets.
+
+Milestone 9 adds an interactive React Flow dependency graph inside the VS Code extension.

@@ -5,11 +5,11 @@ AEGIS helps Java and Spring Boot developers understand the impact of code change
 ## Current Capabilities
 
 - `AEGIS: Analyze Project` runs the local Java analyzer against the active workspace.
-- `AEGIS: Show Impact Graph` requests the dependency graph and reports its size in the AEGIS output channel.
+- `AEGIS: Show Impact Graph` opens an interactive React Flow dependency graph with search, filtering, zoom controls, node inspection, and type-member expand/collapse.
 - The extension communicates with the analyzer through a local Java process and typed JSON responses.
 - The VSIX package bundles the analyzer JAR so installed extensions run without a separate setup.
 
-The interactive graph view is planned for Milestone 9.
+Select a source-backed node and use `Open Source` in the details pane to open its Java file in VS Code.
 
 ## Development
 
