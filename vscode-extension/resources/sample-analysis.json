@@ -1,0 +1,4313 @@
+{
+  "status": "SUCCESS",
+  "command": "analyze",
+  "message": "Parsed 37 Java file(s) and 36 type(s).",
+  "generatedAt": "2026-08-30T09:41:12.482Z",
+  "project": {
+    "projectPath": "/Users/example/projects/storefront-service",
+    "buildTool": "MAVEN",
+    "sourceRoots": [
+      "src/main/java",
+      "src/test/java"
+    ],
+    "diagnostics": [
+      {
+        "severity": "INFO",
+        "message": "Detected build tool: MAVEN."
+      },
+      {
+        "severity": "INFO",
+        "message": "Detected 2 conventional source root(s)."
+      }
+    ]
+  },
+  "parsedProject": {
+    "projectPath": "/Users/example/projects/storefront-service",
+    "fileCount": 37,
+    "typeCount": 36,
+    "methodCount": 100,
+    "fieldCount": 58,
+    "files": [
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront//StorefrontApplication.java",
+        "packageName": "com.example.storefront.",
+        "imports": [
+          "org.springframework.boot.SpringApplication"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront..StorefrontApplication",
+            "simpleName": "StorefrontApplication",
+            "packageName": "com.example.storefront.",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront//StorefrontApplication.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "SpringBootApplication",
+              "EnableScheduling"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "main",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "args",
+                    "type": "String[]"
+                  }
+                ],
+                "modifiers": [
+                  "public",
+                  "static"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 12,
+                  "beginColumn": 1,
+                  "endLine": 18,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 22,
+              "beginColumn": 1,
+              "endLine": 40,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/Customer.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "com.example.storefront.domain.Address",
+          "com.example.storefront.domain.Order",
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.Customer",
+            "simpleName": "Customer",
+            "packageName": "com.example.storefront.domain",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/domain/Customer.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Entity",
+              "Table"
+            ],
+            "fields": [
+              {
+                "name": "id",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Id",
+                  "GeneratedValue"
+                ],
+                "sourceRange": {
+                  "beginLine": 44,
+                  "beginColumn": 1,
+                  "endLine": 45,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "email",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 49,
+                  "beginColumn": 1,
+                  "endLine": 50,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "displayName",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 54,
+                  "beginColumn": 1,
+                  "endLine": 55,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "billingAddress",
+                "type": "Address",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Embedded"
+                ],
+                "sourceRange": {
+                  "beginLine": 59,
+                  "beginColumn": 1,
+                  "endLine": 60,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "orders",
+                "type": "List<Order>",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "OneToMany"
+                ],
+                "sourceRange": {
+                  "beginLine": 64,
+                  "beginColumn": 1,
+                  "endLine": 65,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "getId",
+                "returnType": "Long",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 69,
+                  "beginColumn": 1,
+                  "endLine": 75,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getEmail",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 79,
+                  "beginColumn": 1,
+                  "endLine": 85,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getDisplayName",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 89,
+                  "beginColumn": 1,
+                  "endLine": 95,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getBillingAddress",
+                "returnType": "Address",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 99,
+                  "beginColumn": 1,
+                  "endLine": 105,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getOrders",
+                "returnType": "List<Order>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 109,
+                  "beginColumn": 1,
+                  "endLine": 115,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "addOrder",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "order",
+                    "type": "Order"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 119,
+                  "beginColumn": 1,
+                  "endLine": 125,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 129,
+              "beginColumn": 1,
+              "endLine": 201,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/Order.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "com.example.storefront.domain.Customer",
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.domain.OrderLine",
+          "com.example.storefront.domain.OrderStatus",
+          "com.example.storefront.service.PricingService",
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.Order",
+            "simpleName": "Order",
+            "packageName": "com.example.storefront.domain",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/domain/Order.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Entity",
+              "Table"
+            ],
+            "fields": [
+              {
+                "name": "id",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Id",
+                  "GeneratedValue"
+                ],
+                "sourceRange": {
+                  "beginLine": 205,
+                  "beginColumn": 1,
+                  "endLine": 206,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "customer",
+                "type": "Customer",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "ManyToOne"
+                ],
+                "sourceRange": {
+                  "beginLine": 210,
+                  "beginColumn": 1,
+                  "endLine": 211,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "lines",
+                "type": "List<OrderLine>",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "OneToMany"
+                ],
+                "sourceRange": {
+                  "beginLine": 215,
+                  "beginColumn": 1,
+                  "endLine": 216,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "status",
+                "type": "OrderStatus",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Enumerated"
+                ],
+                "sourceRange": {
+                  "beginLine": 220,
+                  "beginColumn": 1,
+                  "endLine": 221,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "total",
+                "type": "Money",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Embedded"
+                ],
+                "sourceRange": {
+                  "beginLine": 225,
+                  "beginColumn": 1,
+                  "endLine": 226,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "placedAt",
+                "type": "Instant",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 230,
+                  "beginColumn": 1,
+                  "endLine": 231,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "getId",
+                "returnType": "Long",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 235,
+                  "beginColumn": 1,
+                  "endLine": 241,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getCustomer",
+                "returnType": "Customer",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 245,
+                  "beginColumn": 1,
+                  "endLine": 251,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getLines",
+                "returnType": "List<OrderLine>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 255,
+                  "beginColumn": 1,
+                  "endLine": 261,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getStatus",
+                "returnType": "OrderStatus",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 265,
+                  "beginColumn": 1,
+                  "endLine": 271,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getTotal",
+                "returnType": "Money",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 275,
+                  "beginColumn": 1,
+                  "endLine": 281,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "transitionTo",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "status",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 285,
+                  "beginColumn": 1,
+                  "endLine": 291,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "recalculateTotal",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "pricing",
+                    "type": "PricingService"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 295,
+                  "beginColumn": 1,
+                  "endLine": 301,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 305,
+              "beginColumn": 1,
+              "endLine": 401,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/OrderLine.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.domain.Product",
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.OrderLine",
+            "simpleName": "OrderLine",
+            "packageName": "com.example.storefront.domain",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/domain/OrderLine.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Entity"
+            ],
+            "fields": [
+              {
+                "name": "id",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Id",
+                  "GeneratedValue"
+                ],
+                "sourceRange": {
+                  "beginLine": 405,
+                  "beginColumn": 1,
+                  "endLine": 406,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "product",
+                "type": "Product",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "ManyToOne"
+                ],
+                "sourceRange": {
+                  "beginLine": 410,
+                  "beginColumn": 1,
+                  "endLine": 411,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "quantity",
+                "type": "int",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 415,
+                  "beginColumn": 1,
+                  "endLine": 416,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "unitPrice",
+                "type": "Money",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Embedded"
+                ],
+                "sourceRange": {
+                  "beginLine": 420,
+                  "beginColumn": 1,
+                  "endLine": 421,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "getProduct",
+                "returnType": "Product",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 425,
+                  "beginColumn": 1,
+                  "endLine": 431,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getQuantity",
+                "returnType": "int",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 435,
+                  "beginColumn": 1,
+                  "endLine": 441,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "lineTotal",
+                "returnType": "Money",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 445,
+                  "beginColumn": 1,
+                  "endLine": 451,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 455,
+              "beginColumn": 1,
+              "endLine": 509,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/Product.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.Product",
+            "simpleName": "Product",
+            "packageName": "com.example.storefront.domain",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/domain/Product.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Entity",
+              "Table"
+            ],
+            "fields": [
+              {
+                "name": "id",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Id",
+                  "GeneratedValue"
+                ],
+                "sourceRange": {
+                  "beginLine": 513,
+                  "beginColumn": 1,
+                  "endLine": 514,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "sku",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 518,
+                  "beginColumn": 1,
+                  "endLine": 519,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "name",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 523,
+                  "beginColumn": 1,
+                  "endLine": 524,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "listPrice",
+                "type": "Money",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Embedded"
+                ],
+                "sourceRange": {
+                  "beginLine": 528,
+                  "beginColumn": 1,
+                  "endLine": 529,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "active",
+                "type": "boolean",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Column"
+                ],
+                "sourceRange": {
+                  "beginLine": 533,
+                  "beginColumn": 1,
+                  "endLine": 534,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "getId",
+                "returnType": "Long",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 538,
+                  "beginColumn": 1,
+                  "endLine": 544,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getSku",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 548,
+                  "beginColumn": 1,
+                  "endLine": 554,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getName",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 558,
+                  "beginColumn": 1,
+                  "endLine": 564,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "getListPrice",
+                "returnType": "Money",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 568,
+                  "beginColumn": 1,
+                  "endLine": 574,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "isActive",
+                "returnType": "boolean",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 578,
+                  "beginColumn": 1,
+                  "endLine": 584,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 588,
+              "beginColumn": 1,
+              "endLine": 654,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/Money.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.Money",
+            "simpleName": "Money",
+            "packageName": "com.example.storefront.domain",
+            "kind": "RECORD",
+            "sourcePath": "src/main/java/com/example/storefront/domain/Money.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Embeddable"
+            ],
+            "fields": [
+              {
+                "name": "amount",
+                "type": "BigDecimal",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 658,
+                  "beginColumn": 1,
+                  "endLine": 659,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "currency",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 663,
+                  "beginColumn": 1,
+                  "endLine": 664,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "plus",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "other",
+                    "type": "Money"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 668,
+                  "beginColumn": 1,
+                  "endLine": 674,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "times",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "factor",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 678,
+                  "beginColumn": 1,
+                  "endLine": 684,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "zero",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "currency",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public",
+                  "static"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 688,
+                  "beginColumn": 1,
+                  "endLine": 694,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 698,
+              "beginColumn": 1,
+              "endLine": 732,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/Address.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.Address",
+            "simpleName": "Address",
+            "packageName": "com.example.storefront.domain",
+            "kind": "RECORD",
+            "sourcePath": "src/main/java/com/example/storefront/domain/Address.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Embeddable"
+            ],
+            "fields": [
+              {
+                "name": "line1",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 736,
+                  "beginColumn": 1,
+                  "endLine": 737,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "city",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 741,
+                  "beginColumn": 1,
+                  "endLine": 742,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "postalCode",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 746,
+                  "beginColumn": 1,
+                  "endLine": 747,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "countryCode",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 751,
+                  "beginColumn": 1,
+                  "endLine": 752,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "singleLine",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 756,
+                  "beginColumn": 1,
+                  "endLine": 762,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 766,
+              "beginColumn": 1,
+              "endLine": 792,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/domain/OrderStatus.java",
+        "packageName": "com.example.storefront.domain",
+        "imports": [
+          "jakarta.persistence.Entity",
+          "jakarta.persistence.Id",
+          "java.util.List"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.domain.OrderStatus",
+            "simpleName": "OrderStatus",
+            "packageName": "com.example.storefront.domain",
+            "kind": "ENUM",
+            "sourcePath": "src/main/java/com/example/storefront/domain/OrderStatus.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "isTerminal",
+                "returnType": "boolean",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 796,
+                  "beginColumn": 1,
+                  "endLine": 802,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "canTransitionTo",
+                "returnType": "boolean",
+                "parameters": [
+                  {
+                    "name": "next",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 806,
+                  "beginColumn": 1,
+                  "endLine": 812,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 816,
+              "beginColumn": 1,
+              "endLine": 846,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/dto/CustomerDto.java",
+        "packageName": "com.example.storefront.dto",
+        "imports": [
+          "com.example.storefront.domain.Customer",
+          "jakarta.validation.constraints.NotNull"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.dto.CustomerDto",
+            "simpleName": "CustomerDto",
+            "packageName": "com.example.storefront.dto",
+            "kind": "RECORD",
+            "sourcePath": "src/main/java/com/example/storefront/dto/CustomerDto.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [
+              {
+                "name": "id",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 850,
+                  "beginColumn": 1,
+                  "endLine": 851,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "email",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 855,
+                  "beginColumn": 1,
+                  "endLine": 856,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "displayName",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 860,
+                  "beginColumn": 1,
+                  "endLine": 861,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "from",
+                "returnType": "CustomerDto",
+                "parameters": [
+                  {
+                    "name": "customer",
+                    "type": "Customer"
+                  }
+                ],
+                "modifiers": [
+                  "public",
+                  "static"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 865,
+                  "beginColumn": 1,
+                  "endLine": 871,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 875,
+              "beginColumn": 1,
+              "endLine": 897,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/dto/OrderSummary.java",
+        "packageName": "com.example.storefront.dto",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.domain.Order",
+          "com.example.storefront.domain.OrderStatus",
+          "jakarta.validation.constraints.NotNull"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.dto.OrderSummary",
+            "simpleName": "OrderSummary",
+            "packageName": "com.example.storefront.dto",
+            "kind": "RECORD",
+            "sourcePath": "src/main/java/com/example/storefront/dto/OrderSummary.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [
+              {
+                "name": "orderId",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 901,
+                  "beginColumn": 1,
+                  "endLine": 902,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "status",
+                "type": "OrderStatus",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 906,
+                  "beginColumn": 1,
+                  "endLine": 907,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "total",
+                "type": "Money",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 911,
+                  "beginColumn": 1,
+                  "endLine": 912,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "lineCount",
+                "type": "int",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 916,
+                  "beginColumn": 1,
+                  "endLine": 917,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "from",
+                "returnType": "OrderSummary",
+                "parameters": [
+                  {
+                    "name": "order",
+                    "type": "Order"
+                  }
+                ],
+                "modifiers": [
+                  "public",
+                  "static"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 921,
+                  "beginColumn": 1,
+                  "endLine": 927,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 931,
+              "beginColumn": 1,
+              "endLine": 957,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/dto/CheckoutRequest.java",
+        "packageName": "com.example.storefront.dto",
+        "imports": [
+          "com.example.storefront.domain.Address",
+          "jakarta.validation.constraints.NotNull"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.dto.CheckoutRequest",
+            "simpleName": "CheckoutRequest",
+            "packageName": "com.example.storefront.dto",
+            "kind": "RECORD",
+            "sourcePath": "src/main/java/com/example/storefront/dto/CheckoutRequest.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [
+              {
+                "name": "customerId",
+                "type": "Long",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "NotNull"
+                ],
+                "sourceRange": {
+                  "beginLine": 961,
+                  "beginColumn": 1,
+                  "endLine": 962,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "shippingAddress",
+                "type": "Address",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Valid"
+                ],
+                "sourceRange": {
+                  "beginLine": 966,
+                  "beginColumn": 1,
+                  "endLine": 967,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "paymentToken",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "NotBlank"
+                ],
+                "sourceRange": {
+                  "beginLine": 971,
+                  "beginColumn": 1,
+                  "endLine": 972,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [],
+            "sourceRange": {
+              "beginLine": 976,
+              "beginColumn": 1,
+              "endLine": 996,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/repository/CustomerRepository.java",
+        "packageName": "com.example.storefront.repository",
+        "imports": [
+          "com.example.storefront.domain.Customer",
+          "java.util.List",
+          "java.util.Optional",
+          "org.springframework.data.jpa.repository.JpaRepository"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.repository.CustomerRepository",
+            "simpleName": "CustomerRepository",
+            "packageName": "com.example.storefront.repository",
+            "kind": "INTERFACE",
+            "sourcePath": "src/main/java/com/example/storefront/repository/CustomerRepository.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "findByEmail",
+                "returnType": "Optional<Customer>",
+                "parameters": [
+                  {
+                    "name": "email",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1000,
+                  "beginColumn": 1,
+                  "endLine": 1006,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "findAllActive",
+                "returnType": "List<Customer>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Query"
+                ],
+                "sourceRange": {
+                  "beginLine": 1010,
+                  "beginColumn": 1,
+                  "endLine": 1016,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "existsByEmail",
+                "returnType": "boolean",
+                "parameters": [
+                  {
+                    "name": "email",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1020,
+                  "beginColumn": 1,
+                  "endLine": 1026,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1030,
+              "beginColumn": 1,
+              "endLine": 1054,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/repository/OrderRepository.java",
+        "packageName": "com.example.storefront.repository",
+        "imports": [
+          "com.example.storefront.domain.Order",
+          "com.example.storefront.domain.OrderStatus",
+          "java.util.List",
+          "java.util.Optional",
+          "org.springframework.data.jpa.repository.JpaRepository"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.repository.OrderRepository",
+            "simpleName": "OrderRepository",
+            "packageName": "com.example.storefront.repository",
+            "kind": "INTERFACE",
+            "sourcePath": "src/main/java/com/example/storefront/repository/OrderRepository.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "findByCustomerId",
+                "returnType": "List<Order>",
+                "parameters": [
+                  {
+                    "name": "customerId",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1058,
+                  "beginColumn": 1,
+                  "endLine": 1064,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "findByStatus",
+                "returnType": "List<Order>",
+                "parameters": [
+                  {
+                    "name": "status",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1068,
+                  "beginColumn": 1,
+                  "endLine": 1074,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "countByStatus",
+                "returnType": "long",
+                "parameters": [
+                  {
+                    "name": "status",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1078,
+                  "beginColumn": 1,
+                  "endLine": 1084,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "findRecent",
+                "returnType": "List<Order>",
+                "parameters": [
+                  {
+                    "name": "limit",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Query"
+                ],
+                "sourceRange": {
+                  "beginLine": 1088,
+                  "beginColumn": 1,
+                  "endLine": 1094,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1098,
+              "beginColumn": 1,
+              "endLine": 1128,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/repository/ProductRepository.java",
+        "packageName": "com.example.storefront.repository",
+        "imports": [
+          "com.example.storefront.domain.Product",
+          "java.util.List",
+          "java.util.Optional",
+          "org.springframework.data.jpa.repository.JpaRepository"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.repository.ProductRepository",
+            "simpleName": "ProductRepository",
+            "packageName": "com.example.storefront.repository",
+            "kind": "INTERFACE",
+            "sourcePath": "src/main/java/com/example/storefront/repository/ProductRepository.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "findBySku",
+                "returnType": "Optional<Product>",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1132,
+                  "beginColumn": 1,
+                  "endLine": 1138,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "findAllActive",
+                "returnType": "List<Product>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Query"
+                ],
+                "sourceRange": {
+                  "beginLine": 1142,
+                  "beginColumn": 1,
+                  "endLine": 1148,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1152,
+              "beginColumn": 1,
+              "endLine": 1172,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/repository/InventoryRepository.java",
+        "packageName": "com.example.storefront.repository",
+        "imports": [
+          "java.util.List",
+          "java.util.Optional",
+          "org.springframework.data.jpa.repository.JpaRepository"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.repository.InventoryRepository",
+            "simpleName": "InventoryRepository",
+            "packageName": "com.example.storefront.repository",
+            "kind": "INTERFACE",
+            "sourcePath": "src/main/java/com/example/storefront/repository/InventoryRepository.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "availableQuantity",
+                "returnType": "int",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1176,
+                  "beginColumn": 1,
+                  "endLine": 1182,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "reserve",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Modifying",
+                  "Query"
+                ],
+                "sourceRange": {
+                  "beginLine": 1186,
+                  "beginColumn": 1,
+                  "endLine": 1192,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1196,
+              "beginColumn": 1,
+              "endLine": 1216,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/CustomerService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Address",
+          "com.example.storefront.domain.Customer",
+          "com.example.storefront.dto.CustomerDto",
+          "com.example.storefront.repository.CustomerRepository",
+          "com.example.storefront.service.NotificationService",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.CustomerService",
+            "simpleName": "CustomerService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/CustomerService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "customerRepository",
+                "type": "CustomerRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1220,
+                  "beginColumn": 1,
+                  "endLine": 1221,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "notifications",
+                "type": "NotificationService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1225,
+                  "beginColumn": 1,
+                  "endLine": 1226,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "findById",
+                "returnType": "Customer",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1230,
+                  "beginColumn": 1,
+                  "endLine": 1236,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "register",
+                "returnType": "Customer",
+                "parameters": [
+                  {
+                    "name": "email",
+                    "type": "String"
+                  },
+                  {
+                    "name": "displayName",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1240,
+                  "beginColumn": 1,
+                  "endLine": 1246,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "toDto",
+                "returnType": "CustomerDto",
+                "parameters": [
+                  {
+                    "name": "customer",
+                    "type": "Customer"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1250,
+                  "beginColumn": 1,
+                  "endLine": 1256,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "updateAddress",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  },
+                  {
+                    "name": "address",
+                    "type": "Address"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1260,
+                  "beginColumn": 1,
+                  "endLine": 1266,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1270,
+              "beginColumn": 1,
+              "endLine": 1348,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/OrderService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Order",
+          "com.example.storefront.domain.OrderStatus",
+          "com.example.storefront.dto.CheckoutRequest",
+          "com.example.storefront.dto.OrderSummary",
+          "com.example.storefront.repository.OrderRepository",
+          "com.example.storefront.service.CustomerService",
+          "com.example.storefront.service.InventoryService",
+          "com.example.storefront.service.NotificationService",
+          "com.example.storefront.service.PaymentGateway",
+          "com.example.storefront.service.PricingService",
+          "com.example.storefront.support.OrderNotFoundException",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.OrderService",
+            "simpleName": "OrderService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/OrderService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "orderRepository",
+                "type": "OrderRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1352,
+                  "beginColumn": 1,
+                  "endLine": 1353,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "customerService",
+                "type": "CustomerService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1357,
+                  "beginColumn": 1,
+                  "endLine": 1358,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "inventory",
+                "type": "InventoryService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1362,
+                  "beginColumn": 1,
+                  "endLine": 1363,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "pricing",
+                "type": "PricingService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1367,
+                  "beginColumn": 1,
+                  "endLine": 1368,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "payments",
+                "type": "PaymentGateway",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1372,
+                  "beginColumn": 1,
+                  "endLine": 1373,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "notifications",
+                "type": "NotificationService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1377,
+                  "beginColumn": 1,
+                  "endLine": 1378,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "placeOrder",
+                "returnType": "Order",
+                "parameters": [
+                  {
+                    "name": "request",
+                    "type": "CheckoutRequest"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1382,
+                  "beginColumn": 1,
+                  "endLine": 1388,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "cancel",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "orderId",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1392,
+                  "beginColumn": 1,
+                  "endLine": 1398,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "summaryFor",
+                "returnType": "OrderSummary",
+                "parameters": [
+                  {
+                    "name": "orderId",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1402,
+                  "beginColumn": 1,
+                  "endLine": 1408,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "findByStatus",
+                "returnType": "List<Order>",
+                "parameters": [
+                  {
+                    "name": "status",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1412,
+                  "beginColumn": 1,
+                  "endLine": 1418,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "expireStaleCarts",
+                "returnType": "void",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Scheduled",
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1422,
+                  "beginColumn": 1,
+                  "endLine": 1428,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "requireOrder",
+                "returnType": "Order",
+                "parameters": [
+                  {
+                    "name": "orderId",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "private"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1432,
+                  "beginColumn": 1,
+                  "endLine": 1438,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1442,
+              "beginColumn": 1,
+              "endLine": 1590,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/ProductService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.domain.Product",
+          "com.example.storefront.repository.ProductRepository",
+          "com.example.storefront.service.PricingService",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.ProductService",
+            "simpleName": "ProductService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/ProductService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "productRepository",
+                "type": "ProductRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1594,
+                  "beginColumn": 1,
+                  "endLine": 1595,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "pricing",
+                "type": "PricingService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1599,
+                  "beginColumn": 1,
+                  "endLine": 1600,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "findBySku",
+                "returnType": "Product",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1604,
+                  "beginColumn": 1,
+                  "endLine": 1610,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "listActive",
+                "returnType": "List<Product>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Cacheable"
+                ],
+                "sourceRange": {
+                  "beginLine": 1614,
+                  "beginColumn": 1,
+                  "endLine": 1620,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "priceFor",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "product",
+                    "type": "Product"
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1624,
+                  "beginColumn": 1,
+                  "endLine": 1630,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1634,
+              "beginColumn": 1,
+              "endLine": 1696,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/PricingService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Customer",
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.domain.OrderLine",
+          "com.example.storefront.domain.Product",
+          "com.example.storefront.repository.ProductRepository",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.PricingService",
+            "simpleName": "PricingService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/PricingService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "productRepository",
+                "type": "ProductRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1700,
+                  "beginColumn": 1,
+                  "endLine": 1701,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "priceOf",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "product",
+                    "type": "Product"
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1705,
+                  "beginColumn": 1,
+                  "endLine": 1711,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "totalFor",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "lines",
+                    "type": "List<OrderLine>"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1715,
+                  "beginColumn": 1,
+                  "endLine": 1721,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "applyDiscount",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "subtotal",
+                    "type": "Money"
+                  },
+                  {
+                    "name": "customer",
+                    "type": "Customer"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1725,
+                  "beginColumn": 1,
+                  "endLine": 1731,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1735,
+              "beginColumn": 1,
+              "endLine": 1805,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/InventoryService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.OrderLine",
+          "com.example.storefront.repository.InventoryRepository",
+          "com.example.storefront.support.InsufficientStockException",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.InventoryService",
+            "simpleName": "InventoryService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/InventoryService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "inventoryRepository",
+                "type": "InventoryRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1809,
+                  "beginColumn": 1,
+                  "endLine": 1810,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "assertAvailable",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "lines",
+                    "type": "List<OrderLine>"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1814,
+                  "beginColumn": 1,
+                  "endLine": 1820,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "reserve",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "lines",
+                    "type": "List<OrderLine>"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1824,
+                  "beginColumn": 1,
+                  "endLine": 1830,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "release",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "lines",
+                    "type": "List<OrderLine>"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Transactional"
+                ],
+                "sourceRange": {
+                  "beginLine": 1834,
+                  "beginColumn": 1,
+                  "endLine": 1840,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1844,
+              "beginColumn": 1,
+              "endLine": 1902,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/NotificationService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Customer",
+          "com.example.storefront.domain.Order",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.NotificationService",
+            "simpleName": "NotificationService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/NotificationService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "orderPlaced",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "order",
+                    "type": "Order"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Async"
+                ],
+                "sourceRange": {
+                  "beginLine": 1906,
+                  "beginColumn": 1,
+                  "endLine": 1912,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "orderCancelled",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "order",
+                    "type": "Order"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Async"
+                ],
+                "sourceRange": {
+                  "beginLine": 1916,
+                  "beginColumn": 1,
+                  "endLine": 1922,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "welcome",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "customer",
+                    "type": "Customer"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Async"
+                ],
+                "sourceRange": {
+                  "beginLine": 1926,
+                  "beginColumn": 1,
+                  "endLine": 1932,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 1936,
+              "beginColumn": 1,
+              "endLine": 1982,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/PaymentGateway.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.PaymentGateway",
+            "simpleName": "PaymentGateway",
+            "packageName": "com.example.storefront.service",
+            "kind": "INTERFACE",
+            "sourcePath": "src/main/java/com/example/storefront/service/PaymentGateway.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "authorize",
+                "returnType": "String",
+                "parameters": [
+                  {
+                    "name": "amount",
+                    "type": "Money"
+                  },
+                  {
+                    "name": "token",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1986,
+                  "beginColumn": 1,
+                  "endLine": 1992,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "capture",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "authorizationId",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 1996,
+                  "beginColumn": 1,
+                  "endLine": 2002,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "refund",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "authorizationId",
+                    "type": "String"
+                  },
+                  {
+                    "name": "amount",
+                    "type": "Money"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2006,
+                  "beginColumn": 1,
+                  "endLine": 2012,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2016,
+              "beginColumn": 1,
+              "endLine": 2036,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/StripePaymentGateway.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.service.PaymentGateway",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.StripePaymentGateway",
+            "simpleName": "StripePaymentGateway",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/StripePaymentGateway.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Component"
+            ],
+            "fields": [
+              {
+                "name": "apiKey",
+                "type": "String",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [
+                  "Value"
+                ],
+                "sourceRange": {
+                  "beginLine": 2040,
+                  "beginColumn": 1,
+                  "endLine": 2041,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "authorize",
+                "returnType": "String",
+                "parameters": [
+                  {
+                    "name": "amount",
+                    "type": "Money"
+                  },
+                  {
+                    "name": "token",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Override"
+                ],
+                "sourceRange": {
+                  "beginLine": 2045,
+                  "beginColumn": 1,
+                  "endLine": 2051,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "capture",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "authorizationId",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Override"
+                ],
+                "sourceRange": {
+                  "beginLine": 2055,
+                  "beginColumn": 1,
+                  "endLine": 2061,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "refund",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "authorizationId",
+                    "type": "String"
+                  },
+                  {
+                    "name": "amount",
+                    "type": "Money"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Override"
+                ],
+                "sourceRange": {
+                  "beginLine": 2065,
+                  "beginColumn": 1,
+                  "endLine": 2071,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2075,
+              "beginColumn": 1,
+              "endLine": 2139,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/service/ReportingService.java",
+        "packageName": "com.example.storefront.service",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.dto.CustomerDto",
+          "com.example.storefront.repository.CustomerRepository",
+          "com.example.storefront.repository.OrderRepository",
+          "org.springframework.stereotype.Service",
+          "org.springframework.transaction.annotation.Transactional"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.service.ReportingService",
+            "simpleName": "ReportingService",
+            "packageName": "com.example.storefront.service",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/service/ReportingService.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Service"
+            ],
+            "fields": [
+              {
+                "name": "orderRepository",
+                "type": "OrderRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2143,
+                  "beginColumn": 1,
+                  "endLine": 2144,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "customerRepository",
+                "type": "CustomerRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2148,
+                  "beginColumn": 1,
+                  "endLine": 2149,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "dailyRevenue",
+                "returnType": "Money",
+                "parameters": [
+                  {
+                    "name": "day",
+                    "type": "LocalDate"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2153,
+                  "beginColumn": 1,
+                  "endLine": 2159,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "nightlyRollup",
+                "returnType": "void",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Scheduled"
+                ],
+                "sourceRange": {
+                  "beginLine": 2163,
+                  "beginColumn": 1,
+                  "endLine": 2169,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "topCustomers",
+                "returnType": "List<CustomerDto>",
+                "parameters": [
+                  {
+                    "name": "limit",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2173,
+                  "beginColumn": 1,
+                  "endLine": 2179,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2183,
+              "beginColumn": 1,
+              "endLine": 2251,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/web/CustomerController.java",
+        "packageName": "com.example.storefront.web",
+        "imports": [
+          "com.example.storefront.domain.Address",
+          "com.example.storefront.dto.CustomerDto",
+          "com.example.storefront.service.CustomerService",
+          "org.springframework.http.ResponseEntity",
+          "org.springframework.web.bind.annotation.RestController"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.web.CustomerController",
+            "simpleName": "CustomerController",
+            "packageName": "com.example.storefront.web",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/web/CustomerController.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "RestController",
+              "RequestMapping"
+            ],
+            "fields": [
+              {
+                "name": "customerService",
+                "type": "CustomerService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2255,
+                  "beginColumn": 1,
+                  "endLine": 2256,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "list",
+                "returnType": "List<CustomerDto>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2260,
+                  "beginColumn": 1,
+                  "endLine": 2266,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "get",
+                "returnType": "CustomerDto",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2270,
+                  "beginColumn": 1,
+                  "endLine": 2276,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "create",
+                "returnType": "CustomerDto",
+                "parameters": [
+                  {
+                    "name": "body",
+                    "type": "CustomerDto"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PostMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2280,
+                  "beginColumn": 1,
+                  "endLine": 2286,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "updateAddress",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  },
+                  {
+                    "name": "address",
+                    "type": "Address"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PutMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2290,
+                  "beginColumn": 1,
+                  "endLine": 2296,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "delete",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "DeleteMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2300,
+                  "beginColumn": 1,
+                  "endLine": 2306,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2310,
+              "beginColumn": 1,
+              "endLine": 2386,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/web/OrderController.java",
+        "packageName": "com.example.storefront.web",
+        "imports": [
+          "com.example.storefront.domain.OrderStatus",
+          "com.example.storefront.dto.OrderSummary",
+          "com.example.storefront.service.OrderService",
+          "org.springframework.http.ResponseEntity",
+          "org.springframework.web.bind.annotation.RestController"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.web.OrderController",
+            "simpleName": "OrderController",
+            "packageName": "com.example.storefront.web",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/web/OrderController.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "RestController",
+              "RequestMapping"
+            ],
+            "fields": [
+              {
+                "name": "orderService",
+                "type": "OrderService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2390,
+                  "beginColumn": 1,
+                  "endLine": 2391,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "summary",
+                "returnType": "OrderSummary",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2395,
+                  "beginColumn": 1,
+                  "endLine": 2401,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "byStatus",
+                "returnType": "List<OrderSummary>",
+                "parameters": [
+                  {
+                    "name": "status",
+                    "type": "OrderStatus"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2405,
+                  "beginColumn": 1,
+                  "endLine": 2411,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "cancel",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "id",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PostMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2415,
+                  "beginColumn": 1,
+                  "endLine": 2421,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2425,
+              "beginColumn": 1,
+              "endLine": 2483,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/web/ProductController.java",
+        "packageName": "com.example.storefront.web",
+        "imports": [
+          "com.example.storefront.domain.Product",
+          "com.example.storefront.service.ProductService",
+          "org.springframework.http.ResponseEntity",
+          "org.springframework.web.bind.annotation.RestController"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.web.ProductController",
+            "simpleName": "ProductController",
+            "packageName": "com.example.storefront.web",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/web/ProductController.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "RestController",
+              "RequestMapping"
+            ],
+            "fields": [
+              {
+                "name": "productService",
+                "type": "ProductService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2487,
+                  "beginColumn": 1,
+                  "endLine": 2488,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "listActive",
+                "returnType": "List<Product>",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2492,
+                  "beginColumn": 1,
+                  "endLine": 2498,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "bySku",
+                "returnType": "Product",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2502,
+                  "beginColumn": 1,
+                  "endLine": 2508,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "patch",
+                "returnType": "Product",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  },
+                  {
+                    "name": "body",
+                    "type": "Product"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PatchMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2512,
+                  "beginColumn": 1,
+                  "endLine": 2518,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2522,
+              "beginColumn": 1,
+              "endLine": 2574,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/web/CheckoutController.java",
+        "packageName": "com.example.storefront.web",
+        "imports": [
+          "com.example.storefront.dto.CheckoutRequest",
+          "com.example.storefront.dto.OrderSummary",
+          "com.example.storefront.service.InventoryService",
+          "com.example.storefront.service.OrderService",
+          "org.springframework.http.ResponseEntity",
+          "org.springframework.web.bind.annotation.RestController"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.web.CheckoutController",
+            "simpleName": "CheckoutController",
+            "packageName": "com.example.storefront.web",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/web/CheckoutController.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "RestController",
+              "RequestMapping"
+            ],
+            "fields": [
+              {
+                "name": "orderService",
+                "type": "OrderService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2578,
+                  "beginColumn": 1,
+                  "endLine": 2579,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "inventory",
+                "type": "InventoryService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2583,
+                  "beginColumn": 1,
+                  "endLine": 2584,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "checkout",
+                "returnType": "OrderSummary",
+                "parameters": [
+                  {
+                    "name": "request",
+                    "type": "CheckoutRequest"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PostMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2588,
+                  "beginColumn": 1,
+                  "endLine": 2594,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "validate",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "request",
+                    "type": "CheckoutRequest"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PostMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2598,
+                  "beginColumn": 1,
+                  "endLine": 2604,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2608,
+              "beginColumn": 1,
+              "endLine": 2662,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/web/AdminDashboardController.java",
+        "packageName": "com.example.storefront.web",
+        "imports": [
+          "com.example.storefront.domain.Money",
+          "com.example.storefront.repository.OrderRepository",
+          "com.example.storefront.service.ReportingService",
+          "org.springframework.http.ResponseEntity",
+          "org.springframework.web.bind.annotation.RestController"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.web.AdminDashboardController",
+            "simpleName": "AdminDashboardController",
+            "packageName": "com.example.storefront.web",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/web/AdminDashboardController.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Controller",
+              "RequestMapping"
+            ],
+            "fields": [
+              {
+                "name": "reporting",
+                "type": "ReportingService",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2666,
+                  "beginColumn": 1,
+                  "endLine": 2667,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "orderRepository",
+                "type": "OrderRepository",
+                "modifiers": [
+                  "private",
+                  "final"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 2671,
+                  "beginColumn": 1,
+                  "endLine": 2672,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "methods": [
+              {
+                "name": "overview",
+                "returnType": "String",
+                "parameters": [
+                  {
+                    "name": "model",
+                    "type": "Model"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2676,
+                  "beginColumn": 1,
+                  "endLine": 2682,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "revenue",
+                "returnType": "String",
+                "parameters": [
+                  {
+                    "name": "day",
+                    "type": "LocalDate"
+                  },
+                  {
+                    "name": "model",
+                    "type": "Model"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "GetMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2686,
+                  "beginColumn": 1,
+                  "endLine": 2692,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "purge",
+                "returnType": "String",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "PostMapping"
+                ],
+                "sourceRange": {
+                  "beginLine": 2696,
+                  "beginColumn": 1,
+                  "endLine": 2702,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2706,
+              "beginColumn": 1,
+              "endLine": 2768,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/config/SecurityConfig.java",
+        "packageName": "com.example.storefront.config",
+        "imports": [
+          "com.example.storefront.support.RequestLoggingFilter",
+          "org.springframework.context.annotation.Bean"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.config.SecurityConfig",
+            "simpleName": "SecurityConfig",
+            "packageName": "com.example.storefront.config",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/config/SecurityConfig.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Configuration",
+              "EnableWebSecurity"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "filterChain",
+                "returnType": "SecurityFilterChain",
+                "parameters": [
+                  {
+                    "name": "http",
+                    "type": "HttpSecurity"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Bean"
+                ],
+                "sourceRange": {
+                  "beginLine": 2772,
+                  "beginColumn": 1,
+                  "endLine": 2778,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "passwordEncoder",
+                "returnType": "PasswordEncoder",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Bean"
+                ],
+                "sourceRange": {
+                  "beginLine": 2782,
+                  "beginColumn": 1,
+                  "endLine": 2788,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "loggingFilter",
+                "returnType": "RequestLoggingFilter",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Bean"
+                ],
+                "sourceRange": {
+                  "beginLine": 2792,
+                  "beginColumn": 1,
+                  "endLine": 2798,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2802,
+              "beginColumn": 1,
+              "endLine": 2856,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/config/CacheConfig.java",
+        "packageName": "com.example.storefront.config",
+        "imports": [
+          "org.springframework.context.annotation.Bean"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.config.CacheConfig",
+            "simpleName": "CacheConfig",
+            "packageName": "com.example.storefront.config",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/config/CacheConfig.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Configuration",
+              "EnableCaching"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "cacheManager",
+                "returnType": "CacheManager",
+                "parameters": [],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Bean"
+                ],
+                "sourceRange": {
+                  "beginLine": 2860,
+                  "beginColumn": 1,
+                  "endLine": 2866,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2870,
+              "beginColumn": 1,
+              "endLine": 2898,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/support/GlobalExceptionHandler.java",
+        "packageName": "com.example.storefront.support",
+        "imports": [
+          "com.example.storefront.support.InsufficientStockException",
+          "com.example.storefront.support.OrderNotFoundException",
+          "org.springframework.web.bind.annotation.ControllerAdvice"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.support.GlobalExceptionHandler",
+            "simpleName": "GlobalExceptionHandler",
+            "packageName": "com.example.storefront.support",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/support/GlobalExceptionHandler.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "ControllerAdvice"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "orderNotFound",
+                "returnType": "ResponseEntity<String>",
+                "parameters": [
+                  {
+                    "name": "exception",
+                    "type": "OrderNotFoundException"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "ExceptionHandler"
+                ],
+                "sourceRange": {
+                  "beginLine": 2902,
+                  "beginColumn": 1,
+                  "endLine": 2908,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "insufficientStock",
+                "returnType": "ResponseEntity<String>",
+                "parameters": [
+                  {
+                    "name": "exception",
+                    "type": "InsufficientStockException"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "ExceptionHandler"
+                ],
+                "sourceRange": {
+                  "beginLine": 2912,
+                  "beginColumn": 1,
+                  "endLine": 2918,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "fallback",
+                "returnType": "ResponseEntity<String>",
+                "parameters": [
+                  {
+                    "name": "exception",
+                    "type": "Exception"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "ExceptionHandler"
+                ],
+                "sourceRange": {
+                  "beginLine": 2922,
+                  "beginColumn": 1,
+                  "endLine": 2928,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2932,
+              "beginColumn": 1,
+              "endLine": 2980,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/support/RequestLoggingFilter.java",
+        "packageName": "com.example.storefront.support",
+        "imports": [
+          "org.springframework.web.bind.annotation.ControllerAdvice"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.support.RequestLoggingFilter",
+            "simpleName": "RequestLoggingFilter",
+            "packageName": "com.example.storefront.support",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/support/RequestLoggingFilter.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Component"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "doFilterInternal",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "request",
+                    "type": "HttpServletRequest"
+                  },
+                  {
+                    "name": "response",
+                    "type": "HttpServletResponse"
+                  },
+                  {
+                    "name": "chain",
+                    "type": "FilterChain"
+                  }
+                ],
+                "modifiers": [
+                  "protected"
+                ],
+                "annotations": [
+                  "Override"
+                ],
+                "sourceRange": {
+                  "beginLine": 2984,
+                  "beginColumn": 1,
+                  "endLine": 2990,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 2994,
+              "beginColumn": 1,
+              "endLine": 3034,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/support/MetricsAspect.java",
+        "packageName": "com.example.storefront.support",
+        "imports": [
+          "org.springframework.web.bind.annotation.ControllerAdvice"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.support.MetricsAspect",
+            "simpleName": "MetricsAspect",
+            "packageName": "com.example.storefront.support",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/support/MetricsAspect.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [
+              "Aspect",
+              "Component"
+            ],
+            "fields": [],
+            "methods": [
+              {
+                "name": "timeServiceCalls",
+                "returnType": "Object",
+                "parameters": [
+                  {
+                    "name": "joinPoint",
+                    "type": "ProceedingJoinPoint"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "Around"
+                ],
+                "sourceRange": {
+                  "beginLine": 3038,
+                  "beginColumn": 1,
+                  "endLine": 3044,
+                  "endColumn": 1
+                }
+              },
+              {
+                "name": "countFailures",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "exception",
+                    "type": "Throwable"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [
+                  "AfterThrowing"
+                ],
+                "sourceRange": {
+                  "beginLine": 3048,
+                  "beginColumn": 1,
+                  "endLine": 3054,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 3058,
+              "beginColumn": 1,
+              "endLine": 3102,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/support/OrderNotFoundException.java",
+        "packageName": "com.example.storefront.support",
+        "imports": [
+          "org.springframework.web.bind.annotation.ControllerAdvice"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.support.OrderNotFoundException",
+            "simpleName": "OrderNotFoundException",
+            "packageName": "com.example.storefront.support",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/support/OrderNotFoundException.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "OrderNotFoundException",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "orderId",
+                    "type": "Long"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 3106,
+                  "beginColumn": 1,
+                  "endLine": 3112,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 3116,
+              "beginColumn": 1,
+              "endLine": 3130,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/support/InsufficientStockException.java",
+        "packageName": "com.example.storefront.support",
+        "imports": [
+          "org.springframework.web.bind.annotation.ControllerAdvice"
+        ],
+        "types": [
+          {
+            "qualifiedName": "com.example.storefront.support.InsufficientStockException",
+            "simpleName": "InsufficientStockException",
+            "packageName": "com.example.storefront.support",
+            "kind": "CLASS",
+            "sourcePath": "src/main/java/com/example/storefront/support/InsufficientStockException.java",
+            "modifiers": [
+              "public"
+            ],
+            "annotations": [],
+            "fields": [],
+            "methods": [
+              {
+                "name": "InsufficientStockException",
+                "returnType": "void",
+                "parameters": [
+                  {
+                    "name": "sku",
+                    "type": "String"
+                  },
+                  {
+                    "name": "requested",
+                    "type": "int"
+                  }
+                ],
+                "modifiers": [
+                  "public"
+                ],
+                "annotations": [],
+                "sourceRange": {
+                  "beginLine": 3134,
+                  "beginColumn": 1,
+                  "endLine": 3140,
+                  "endColumn": 1
+                }
+              }
+            ],
+            "sourceRange": {
+              "beginLine": 3144,
+              "beginColumn": 1,
+              "endLine": 3158,
+              "endColumn": 1
+            }
+          }
+        ],
+        "diagnostics": []
+      },
+      {
+        "sourceRoot": "src/main/java",
+        "relativePath": "com/example/storefront/legacy/LegacyPricingRules.java",
+        "packageName": "com.example.storefront.legacy",
+        "imports": [],
+        "types": [],
+        "diagnostics": [
+          {
+            "severity": "ERROR",
+            "sourcePath": "src/main/java/com/example/storefront/legacy/LegacyPricingRules.java",
+            "message": "Parse error at 'sealed': this source uses a preview feature that is not enabled.",
+            "line": 0,
+            "column": 0
+          }
+        ]
+      }
+    ],
+    "diagnostics": [
+      {
+        "severity": "ERROR",
+        "sourcePath": "src/main/java/com/example/storefront/legacy/LegacyPricingRules.java",
+        "message": "Parse error at 'sealed': this source uses a preview feature that is not enabled.",
+        "line": 0,
+        "column": 0
+      }
+    ]
+  },
+  "diagnostics": [
+    {
+      "severity": "INFO",
+      "message": "Detected build tool: MAVEN."
+    },
+    {
+      "severity": "INFO",
+      "message": "Detected 2 conventional source root(s)."
+    },
+    {
+      "severity": "INFO",
+      "message": "Parsed 37 file(s) containing 36 type(s), 100 method(s) and 58 field(s)."
+    },
+    {
+      "severity": "WARNING",
+      "message": "1 file(s) could not be parsed and were skipped."
+    }
+  ]
+}

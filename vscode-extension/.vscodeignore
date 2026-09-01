@@ -1,0 +1,26 @@
+# Sources and build tooling: the VSIX ships dist/, not what produced it.
+src/**
+scripts/**
+tsconfig.json
+eslint.config.mjs
+package-lock.json
+*.map
+dist/**/*.map
+
+# Tests and the dev-only dashboard preview are not part of the product.
+dist/test/**
+dist/dashboard-preview.html
+
+# Editor and CI scaffolding.
+.vscode/**
+.vscode-test/**
+.github/**
+.gitignore
+coverage/**
+out/**
+node_modules/**
+**/.DS_Store
+
+# resources/** is deliberately NOT ignored: it carries the bundled sample
+# analysis the dashboard falls back to, the panel icons, and - when it has been
+# built and copied in - the analyzer jar itself.

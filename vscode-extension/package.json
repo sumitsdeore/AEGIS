@@ -1,0 +1,216 @@
+{
+  "name": "aegis",
+  "displayName": "AEGIS",
+  "description": "Developer intelligence for predicting Java and Spring Boot code change impact before refactoring.",
+  "version": "0.1.0",
+  "publisher": "aegis-devtools",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.92.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "java",
+    "spring",
+    "spring-boot",
+    "static-analysis",
+    "refactoring",
+    "dependency-graph"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/pom.xml",
+    "workspaceContains:**/build.gradle",
+    "workspaceContains:**/build.gradle.kts",
+    "onLanguage:java"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aegis.analyzeProject",
+        "title": "Analyze Project",
+        "category": "AEGIS",
+        "icon": "$(telescope)"
+      },
+      {
+        "command": "aegis.openDashboard",
+        "title": "Open Dashboard",
+        "category": "AEGIS",
+        "icon": "$(dashboard)"
+      },
+      {
+        "command": "aegis.showImpactGraph",
+        "title": "Show Impact Graph",
+        "category": "AEGIS",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "aegis.showSpringInsights",
+        "title": "Show Spring Insights",
+        "category": "AEGIS",
+        "icon": "$(server-process)"
+      },
+      {
+        "command": "aegis.revealType",
+        "title": "Reveal Type in Impact Graph",
+        "category": "AEGIS",
+        "icon": "$(search)"
+      },
+      {
+        "command": "aegis.exportAnalysis",
+        "title": "Export Analysis as JSON",
+        "category": "AEGIS",
+        "icon": "$(save-as)"
+      },
+      {
+        "command": "aegis.clearAnalysis",
+        "title": "Clear Stored Analysis",
+        "category": "AEGIS",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "aegis.showLogs",
+        "title": "Show Logs",
+        "category": "AEGIS",
+        "icon": "$(output)"
+      },
+      {
+        "command": "aegis.openSettings",
+        "title": "Open Settings",
+        "category": "AEGIS",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "aegis.openSource",
+        "title": "Open Source File",
+        "category": "AEGIS"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "aegis.analyzeProject"
+        },
+        {
+          "command": "aegis.openDashboard"
+        },
+        {
+          "command": "aegis.showImpactGraph"
+        },
+        {
+          "command": "aegis.showSpringInsights"
+        },
+        {
+          "command": "aegis.revealType",
+          "when": "aegis.hasAnalysis"
+        },
+        {
+          "command": "aegis.exportAnalysis",
+          "when": "aegis.hasAnalysis"
+        },
+        {
+          "command": "aegis.clearAnalysis",
+          "when": "aegis.hasAnalysis"
+        },
+        {
+          "command": "aegis.showLogs"
+        },
+        {
+          "command": "aegis.openSettings"
+        },
+        {
+          "command": "aegis.openSource",
+          "when": "false"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "aegis.analyzeProject",
+          "when": "explorerResourceIsFolder && explorerResourceIsRoot",
+          "group": "aegis@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "aegis.openDashboard",
+        "key": "ctrl+alt+a",
+        "mac": "cmd+alt+a",
+        "when": "editorLangId == java || aegis.hasAnalysis"
+      }
+    ],
+    "configuration": {
+      "title": "AEGIS",
+      "properties": {
+        "aegis.analyzer.jarPath": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Absolute path to the AEGIS analyzer jar (`aegis-analyzer-*.jar`). Leave empty to auto-discover it in `analyzer-engine/target`, `target`, or the extension's bundled `resources/analyzer` folder. A leading `~` is expanded.",
+          "scope": "machine-overridable"
+        },
+        "aegis.java.path": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Java executable used to run the analyzer. Accepts a path to `java` or a JDK home directory. Leave empty to try `JAVA_HOME` and then `java` on `PATH`. The analyzer jar requires **Java 21 or newer**.",
+          "scope": "machine-overridable"
+        },
+        "aegis.analyzer.timeoutMs": {
+          "type": "number",
+          "default": 120000,
+          "minimum": 5000,
+          "maximum": 600000,
+          "markdownDescription": "How long to let the analyzer run before stopping it, in milliseconds. Raise this for very large projects.",
+          "scope": "window"
+        },
+        "aegis.dashboard.useSampleDataWhenUnavailable": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "When the analyzer cannot run at all (no JDK 21+, or no jar found), populate the dashboard with bundled sample data so the interface stays explorable. Sample runs are always labelled and are never presented as real measurements of your project.",
+          "scope": "window"
+        },
+        "aegis.analyzeOnStartup": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Analyze the project automatically when a Java workspace is opened. The run is quiet: it will not steal focus or open the dashboard on its own.",
+          "scope": "window"
+        },
+        "aegis.risk.highThreshold": {
+          "type": "number",
+          "default": 70,
+          "minimum": 1,
+          "maximum": 100,
+          "markdownDescription": "Composite risk score (0-100) at which a type is flagged **high risk**. The lower bands are derived from this value, so reducing it widens the warning bands.",
+          "scope": "window"
+        },
+        "aegis.verboseLogging": {
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Emit `DEBUG` lines to the AEGIS output channel, including the exact analyzer command line. Useful when diagnosing jar or JDK discovery.",
+          "scope": "window"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src",
+    "pretest": "npm run compile",
+    "test": "node ./dist/test/runTests.js",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.92.0",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "@vscode/vsce": "^3.0.0",
+    "eslint": "^9.8.0",
+    "typescript": "^5.5.4"
+  }
+}
