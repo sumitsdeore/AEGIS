@@ -128,10 +128,7 @@ suite("Spring insights", () => {
     assertEqual(insights.endpoints.length, 0);
   });
 
-  test("declares endpoint URL paths unavailable when endpoints exist", () => {
-    // The analyzer captures annotation names only, so @GetMapping("/orders")
-    // yields the verb but not the path. The dashboard says so rather than
-    // fabricating a route table.
+  test("declares endpoint URL paths unavailable when no argument details are present", () => {
     const insights = deriveSpringInsights(
       makeProject([
         { qualifiedName: "app.web.C", annotations: ["RestController"], methods: [makeMethod("list", "List<Order>", [], ["GetMapping"])] }
@@ -139,6 +136,28 @@ suite("Spring insights", () => {
     );
 
     assertEqual(insights.endpointPathsUnavailable, true);
+  });
+
+  test("extracts endpoint URL paths when annotation details are present", () => {
+    const insights = deriveSpringInsights(
+      makeProject([
+        {
+          qualifiedName: "app.web.OrderController",
+          annotations: ["RestController", "RequestMapping"],
+          annotationDetails: [{ name: "RequestMapping", arguments: { value: "/api/orders" } }],
+          methods: [
+            {
+              ...makeMethod("get", "Order", ["Long"], ["GetMapping"]),
+              annotationDetails: [{ name: "GetMapping", arguments: { value: "/{id}" } }]
+            }
+          ]
+        }
+      ])
+    );
+
+    assertEqual(insights.endpointPathsUnavailable, false);
+    assertEqual(insights.endpoints.length, 1);
+    assertEqual(insights.endpoints[0].path, "/api/orders/{id}");
   });
 
   test("counts scheduled and bean factory methods", () => {

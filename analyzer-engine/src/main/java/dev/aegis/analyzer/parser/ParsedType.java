@@ -11,6 +11,9 @@ public record ParsedType(
         String sourcePath,
         List<String> modifiers,
         List<String> annotations,
+        List<ParsedAnnotation> annotationDetails,
+        String superclass,
+        List<String> interfaces,
         List<ParsedField> fields,
         List<ParsedMethod> methods,
         SourceRange sourceRange
@@ -29,8 +32,39 @@ public record ParsedType(
         }
         modifiers = List.copyOf(Objects.requireNonNull(modifiers, "modifiers must not be null"));
         annotations = List.copyOf(Objects.requireNonNull(annotations, "annotations must not be null"));
+        annotationDetails = List.copyOf(Objects.requireNonNull(annotationDetails, "annotationDetails must not be null"));
+        interfaces = List.copyOf(Objects.requireNonNull(interfaces, "interfaces must not be null"));
         fields = List.copyOf(Objects.requireNonNull(fields, "fields must not be null"));
         methods = List.copyOf(Objects.requireNonNull(methods, "methods must not be null"));
         Objects.requireNonNull(sourceRange, "sourceRange must not be null");
+    }
+
+    public ParsedType(
+            String qualifiedName,
+            String simpleName,
+            String packageName,
+            TypeKind kind,
+            String sourcePath,
+            List<String> modifiers,
+            List<String> annotations,
+            List<ParsedField> fields,
+            List<ParsedMethod> methods,
+            SourceRange sourceRange
+    ) {
+        this(
+                qualifiedName,
+                simpleName,
+                packageName,
+                kind,
+                sourcePath,
+                modifiers,
+                annotations,
+                List.of(),
+                null,
+                List.of(),
+                fields,
+                methods,
+                sourceRange
+        );
     }
 }

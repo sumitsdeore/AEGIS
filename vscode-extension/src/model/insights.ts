@@ -1,4 +1,10 @@
-import type { ParsedProject, ParsedType, SourceRange } from "../types/analyzer";
+import type {
+  ParsedAnnotation,
+  ParsedMethod,
+  ParsedProject,
+  ParsedType,
+  SourceRange
+} from "../types/analyzer";
 import { collectTypes } from "../types/analyzer";
 
 /**
@@ -122,6 +128,7 @@ export interface SpringComponent {
 
 export interface SpringEndpoint {
   readonly httpMethod: HttpVerb;
+  readonly path?: string;
   readonly controllerSimpleName: string;
   readonly controllerQualifiedName: string;
   readonly methodName: string;
@@ -241,10 +248,12 @@ export function deriveSpringInsights(parsedProject: ParsedProject): SpringInsigh
         continue;
       }
 
-      const verb = findHttpVerb(method.annotations);
-      if (verb) {
+      const mapping = findHttpMapping(method.annotations);
+      if (mapping) {
+        const endpointPath = extractEndpointPath(type, method, mapping.annotationName);
         endpoints.push({
-          httpMethod: verb,
+          httpMethod: mapping.verb,
+          path: endpointPath,
           controllerSimpleName: type.simpleName,
           controllerQualifiedName: type.qualifiedName,
           methodName: method.name,
@@ -280,6 +289,9 @@ export function deriveSpringInsights(parsedProject: ParsedProject): SpringInsigh
       left.methodName.localeCompare(right.methodName)
   );
 
+  const endpointPathsUnavailable =
+    endpoints.length > 0 && endpoints.every((endpoint) => endpoint.path === undefined);
+
   return {
     isSpringProject: components.length > 0,
     components,
@@ -289,15 +301,64 @@ export function deriveSpringInsights(parsedProject: ParsedProject): SpringInsigh
     scheduledMethodCount,
     beanFactoryMethodCount,
     topAnnotations,
-    endpointPathsUnavailable: endpoints.length > 0
+    endpointPathsUnavailable
   };
 }
 
-function findHttpVerb(annotations: readonly string[]): HttpVerb | undefined {
+function findHttpMapping(
+  annotations: readonly string[]
+): { verb: HttpVerb; annotationName: string } | undefined {
   for (const annotation of annotations) {
     const verb = MAPPING_ANNOTATIONS[annotation];
     if (verb) {
-      return verb;
+      return { verb, annotationName: annotation };
+    }
+  }
+  return undefined;
+}
+
+function extractEndpointPath(
+  type: ParsedType,
+  method: ParsedMethod,
+  verbAnnotation: string
+): string | undefined {
+  const classPath =
+    extractAnnotationArgument(type.annotationDetails, "RequestMapping", "value", "path") ?? "";
+  const methodPath =
+    extractAnnotationArgument(method.annotationDetails, verbAnnotation, "value", "path") ?? "";
+
+  if (!classPath && !methodPath) {
+    return undefined;
+  }
+
+  const cleanClass = classPath.replace(/^["']|["']$/g, "").trim();
+  const cleanMethod = methodPath.replace(/^["']|["']$/g, "").trim();
+
+  if (cleanClass && cleanMethod) {
+    const joined = `${cleanClass.replace(/\/+$/, "")}/${cleanMethod.replace(/^\/+/, "")}`;
+    return joined.startsWith("/") ? joined : `/${joined}`;
+  }
+
+  const single = cleanClass || cleanMethod;
+  return single.startsWith("/") ? single : `/${single}`;
+}
+
+function extractAnnotationArgument(
+  annotations: readonly ParsedAnnotation[] | undefined,
+  annotationName: string,
+  ...keys: string[]
+): string | undefined {
+  if (!annotations) {
+    return undefined;
+  }
+  const match = annotations.find((ann) => ann.name === annotationName);
+  if (!match || !match.arguments) {
+    return undefined;
+  }
+  for (const key of keys) {
+    const val = match.arguments[key];
+    if (typeof val === "string" && val.trim().length > 0) {
+      return val;
     }
   }
   return undefined;

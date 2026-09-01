@@ -14,7 +14,7 @@ import { layerRank } from "./insights";
  */
 
 /** Why an edge exists. Shown in the UI so inference is auditable. */
-export type EdgeKind = "import" | "field" | "signature";
+export type EdgeKind = "import" | "field" | "signature" | "extends" | "implements";
 
 /**
  * How many types the impact graph draws.
@@ -38,6 +38,8 @@ export interface GraphNode {
   readonly kind: TypeKind;
   readonly sourcePath: string;
   readonly sourceRange: SourceRange;
+  readonly superclass?: string | null;
+  readonly interfaces?: readonly string[];
   readonly methodCount: number;
   readonly fieldCount: number;
   readonly annotations: readonly string[];
@@ -288,6 +290,26 @@ export function buildDependencyGraph(
         }
       }
     }
+
+    if (type.superclass) {
+      for (const reference of extractTypeReferences(type.superclass)) {
+        const resolved = resolve(reference, type);
+        if (resolved) {
+          addDependency(type, resolved, "extends");
+        }
+      }
+    }
+
+    if (type.interfaces && type.interfaces.length > 0) {
+      for (const iface of type.interfaces) {
+        for (const reference of extractTypeReferences(iface)) {
+          const resolved = resolve(reference, type);
+          if (resolved) {
+            addDependency(type, resolved, "implements");
+          }
+        }
+      }
+    }
   }
 
   const edges: GraphEdge[] = [];
@@ -349,6 +371,8 @@ export function buildDependencyGraph(
       kind: node.type.kind,
       sourcePath: node.type.sourcePath,
       sourceRange: node.type.sourceRange,
+      superclass: node.type.superclass,
+      interfaces: node.type.interfaces,
       methodCount: node.type.methods.length,
       fieldCount: node.type.fields.length,
       annotations: node.type.annotations,

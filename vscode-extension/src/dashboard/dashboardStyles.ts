@@ -254,6 +254,7 @@ tbody tr.is-clickable:hover { background: var(--aegis-bg-hover); }
 td.num { text-align: right; font-variant-numeric: tabular-nums; }
 .mono { font-family: var(--aegis-font-mono); font-size: 11px; }
 .dim { color: var(--aegis-text-dim); }
+.accent { color: var(--aegis-primary); }
 
 /* ------------------------------------------------------------ risk pill --- */
 

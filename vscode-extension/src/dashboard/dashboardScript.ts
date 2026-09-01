@@ -539,6 +539,12 @@ export const DASHBOARD_SCRIPT = `
 
     var stats = el("dl");
     stats.style.margin = "0";
+    if (node.superclass) {
+      stats.appendChild(statPair("Extends", node.superclass));
+    }
+    if (node.interfaces && node.interfaces.length > 0) {
+      stats.appendChild(statPair("Implements", node.interfaces.join(", ")));
+    }
     stats.appendChild(statPair("Direct dependents", String(node.fanIn)));
     stats.appendChild(statPair("Depends on", String(node.fanOut)));
     stats.appendChild(statPair("Transitive impact", String(node.impactReach) + " type(s)"));

@@ -271,10 +271,33 @@ suite("dashboard rendering", () => {
     assertIncludes(sampleHtml.toLowerCase(), "sample data");
   });
 
-  test("states plainly that endpoint URL paths are unavailable", () => {
-    // The analyzer captures annotation names only. Claiming a route table we do
-    // not have would be the single most misleading thing this UI could do.
-    assertIncludes(html.toLowerCase(), "url path");
+  test("renders endpoint URL paths when available", () => {
+    const sampleHtml = renderDashboardHtml(
+      buildDashboardState(
+        { ...successResult(loadSampleResponse()), outcome: "unavailable", source: "sample" },
+        "/tmp/project",
+        70
+      ),
+      { nonce: NONCE, cspSource: CSP_SOURCE }
+    );
+    assertIncludes(sampleHtml, "/api/customers");
+    assertIncludes(sampleHtml, "/api/orders");
+  });
+
+  test("states plainly that endpoint URL paths are unavailable when no argument details exist", () => {
+    const legacyProject = makeProject([
+      {
+        qualifiedName: "app.web.LegacyController",
+        annotations: ["RestController"],
+        methods: [makeMethod("list", "List<String>", [], ["GetMapping"])]
+      }
+    ]);
+    const legacyState = buildDashboardState(successResult(makeResponse(legacyProject)), "/tmp/project", 70);
+    const rendered = renderDashboardHtml(legacyState, {
+      nonce: NONCE,
+      cspSource: CSP_SOURCE
+    });
+    assertIncludes(rendered.toLowerCase(), "url path");
   });
 
   test("opens on the requested panel without needing a message to arrive", () => {

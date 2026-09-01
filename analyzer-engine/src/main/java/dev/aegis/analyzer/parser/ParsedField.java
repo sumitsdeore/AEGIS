@@ -8,6 +8,7 @@ public record ParsedField(
         String type,
         List<String> modifiers,
         List<String> annotations,
+        List<ParsedAnnotation> annotationDetails,
         SourceRange sourceRange
 ) {
     public ParsedField {
@@ -19,6 +20,17 @@ public record ParsedField(
         }
         modifiers = List.copyOf(Objects.requireNonNull(modifiers, "modifiers must not be null"));
         annotations = List.copyOf(Objects.requireNonNull(annotations, "annotations must not be null"));
+        annotationDetails = List.copyOf(Objects.requireNonNull(annotationDetails, "annotationDetails must not be null"));
         Objects.requireNonNull(sourceRange, "sourceRange must not be null");
+    }
+
+    public ParsedField(
+            String name,
+            String type,
+            List<String> modifiers,
+            List<String> annotations,
+            SourceRange sourceRange
+    ) {
+        this(name, type, modifiers, annotations, List.of(), sourceRange);
     }
 }

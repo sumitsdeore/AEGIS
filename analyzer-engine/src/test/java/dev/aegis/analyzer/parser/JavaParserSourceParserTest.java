@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class JavaParserSourceParserTest {
@@ -32,7 +33,7 @@ class JavaParserSourceParserTest {
                 import org.springframework.web.bind.annotation.RestController;
 
                 @RestController
-                public class OrderController {
+                public class OrderController extends BaseController implements AuditAware, Tagged {
                     private final OrderService orderService;
 
                     public OrderController(OrderService orderService) {
@@ -45,23 +46,27 @@ class JavaParserSourceParserTest {
                     }
                 }
 
+                class BaseController {}
+                interface AuditAware {}
+                interface Tagged {}
+
                 interface OrderService {
                     List<String> listOrders(String status);
                 }
 
-                enum OrderState {
+                enum OrderState implements Tagged {
                     OPEN,
                     CLOSED
                 }
 
-                record OrderSummary(String id) {
+                record OrderSummary(String id) implements Tagged {
                 }
                 """);
 
         ParsedProject parsedProject = parser.parse(projectDir, List.of("src/main/java"));
 
         assertEquals(1, parsedProject.fileCount());
-        assertEquals(4, parsedProject.typeCount());
+        assertEquals(7, parsedProject.typeCount());
         assertEquals(2, parsedProject.methodCount());
         assertEquals(1, parsedProject.fieldCount());
         assertTrue(parsedProject.diagnostics().isEmpty());
@@ -80,6 +85,8 @@ class JavaParserSourceParserTest {
         assertEquals("com.example.demo.OrderController", controller.qualifiedName());
         assertTrue(controller.annotations().contains("RestController"));
         assertTrue(controller.modifiers().contains("public"));
+        assertEquals("BaseController", controller.superclass());
+        assertEquals(List.of("AuditAware", "Tagged"), controller.interfaces());
         assertEquals(1, controller.fields().size());
         assertEquals("orderService", controller.fields().getFirst().name());
         assertEquals("OrderService", controller.fields().getFirst().type());
@@ -91,6 +98,10 @@ class JavaParserSourceParserTest {
         assertEquals("status", method.parameters().getFirst().name());
         assertEquals("String", method.parameters().getFirst().type());
         assertTrue(method.annotations().contains("GetMapping"));
+        assertFalse(method.annotationDetails().isEmpty());
+        ParsedAnnotation getMapping = method.annotationDetails().getFirst();
+        assertEquals("GetMapping", getMapping.name());
+        assertEquals("/orders", getMapping.arguments().get("value"));
         assertTrue(method.sourceRange().beginLine() > 0);
 
         ParsedType summary = javaFile.types().stream()
@@ -99,6 +110,8 @@ class JavaParserSourceParserTest {
                 .orElseThrow();
 
         assertEquals(TypeKind.RECORD, summary.kind());
+        assertNull(summary.superclass());
+        assertEquals(List.of("Tagged"), summary.interfaces());
     }
 
     @Test

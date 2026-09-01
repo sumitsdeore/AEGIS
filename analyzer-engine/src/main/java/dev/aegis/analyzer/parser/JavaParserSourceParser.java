@@ -16,8 +16,14 @@ import com.github.javaparser.ast.body.Parameter;
 import com.github.javaparser.ast.body.RecordDeclaration;
 import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
+import com.github.javaparser.ast.expr.Expression;
+import com.github.javaparser.ast.expr.MarkerAnnotationExpr;
+import com.github.javaparser.ast.expr.NormalAnnotationExpr;
+import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
+import com.github.javaparser.ast.expr.StringLiteralExpr;
 import com.github.javaparser.ast.nodeTypes.NodeWithAnnotations;
 import com.github.javaparser.ast.nodeTypes.NodeWithModifiers;
+import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import dev.aegis.analyzer.core.DiagnosticSeverity;
 
 import java.io.IOException;
@@ -25,7 +31,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -146,6 +154,7 @@ public final class JavaParserSourceParser implements JavaSourceParser {
                                 variable.getTypeAsString(),
                                 modifiers(field),
                                 annotations(field),
+                                annotationDetails(field),
                                 sourceRange(field)
                         )))
                 .sorted(Comparator.comparing(ParsedField::name))
@@ -157,6 +166,7 @@ public final class JavaParserSourceParser implements JavaSourceParser {
                         method.getParameters().stream().map(this::toParsedParameter).toList(),
                         modifiers(method),
                         annotations(method),
+                        annotationDetails(method),
                         sourceRange(method)
                 ))
                 .sorted(Comparator.comparing(ParsedMethod::name).thenComparing(method -> method.parameters().size()))
@@ -170,6 +180,9 @@ public final class JavaParserSourceParser implements JavaSourceParser {
                 sourcePath,
                 modifiers(type),
                 annotations(type),
+                annotationDetails(type),
+                extractSuperclass(type),
+                extractInterfaces(type),
                 fields,
                 methods,
                 sourceRange(type)
@@ -210,6 +223,44 @@ public final class JavaParserSourceParser implements JavaSourceParser {
         return TypeKind.ANNOTATION;
     }
 
+    private String extractSuperclass(TypeDeclaration<?> type) {
+        if (type instanceof ClassOrInterfaceDeclaration classDecl && !classDecl.isInterface()) {
+            return classDecl.getExtendedTypes().stream()
+                    .map(ClassOrInterfaceType::asString)
+                    .findFirst()
+                    .orElse(null);
+        }
+        return null;
+    }
+
+    private List<String> extractInterfaces(TypeDeclaration<?> type) {
+        if (type instanceof ClassOrInterfaceDeclaration classDecl) {
+            if (classDecl.isInterface()) {
+                return classDecl.getExtendedTypes().stream()
+                        .map(ClassOrInterfaceType::asString)
+                        .sorted()
+                        .toList();
+            }
+            return classDecl.getImplementedTypes().stream()
+                    .map(ClassOrInterfaceType::asString)
+                    .sorted()
+                    .toList();
+        }
+        if (type instanceof RecordDeclaration recordDecl) {
+            return recordDecl.getImplementedTypes().stream()
+                    .map(ClassOrInterfaceType::asString)
+                    .sorted()
+                    .toList();
+        }
+        if (type instanceof EnumDeclaration enumDecl) {
+            return enumDecl.getImplementedTypes().stream()
+                    .map(ClassOrInterfaceType::asString)
+                    .sorted()
+                    .toList();
+        }
+        return List.of();
+    }
+
     private List<String> modifiers(Node node) {
         if (!(node instanceof NodeWithModifiers<?> nodeWithModifiers)) {
             return List.of();
@@ -231,6 +282,43 @@ public final class JavaParserSourceParser implements JavaSourceParser {
                 .map(AnnotationExpr::getNameAsString)
                 .sorted()
                 .toList();
+    }
+
+    private List<ParsedAnnotation> annotationDetails(Node node) {
+        if (!(node instanceof NodeWithAnnotations<?> nodeWithAnnotations)) {
+            return List.of();
+        }
+
+        return nodeWithAnnotations.getAnnotations().stream()
+                .map(this::toParsedAnnotation)
+                .sorted(Comparator.comparing(ParsedAnnotation::name))
+                .toList();
+    }
+
+    private ParsedAnnotation toParsedAnnotation(AnnotationExpr annotationExpr) {
+        String name = annotationExpr.getNameAsString();
+        if (annotationExpr instanceof MarkerAnnotationExpr) {
+            return ParsedAnnotation.marker(name);
+        }
+        if (annotationExpr instanceof SingleMemberAnnotationExpr singleMember) {
+            String val = formatExpression(singleMember.getMemberValue());
+            return new ParsedAnnotation(name, Map.of("value", val));
+        }
+        if (annotationExpr instanceof NormalAnnotationExpr normal) {
+            Map<String, String> args = new LinkedHashMap<>();
+            normal.getPairs().forEach(pair -> {
+                args.put(pair.getNameAsString(), formatExpression(pair.getValue()));
+            });
+            return new ParsedAnnotation(name, args);
+        }
+        return ParsedAnnotation.marker(name);
+    }
+
+    private String formatExpression(Expression expression) {
+        if (expression instanceof StringLiteralExpr stringLiteral) {
+            return stringLiteral.getValue();
+        }
+        return expression.toString();
     }
 
     private SourceRange sourceRange(Node node) {

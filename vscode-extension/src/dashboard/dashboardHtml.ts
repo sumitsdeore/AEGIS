@@ -485,10 +485,8 @@ function renderRelationshipProvenance(
 <div class="callout" style="margin-top:14px">
   <div class="callout-title">How these relationships were derived</div>
   <div class="callout-body">
-    Edges are inferred in the extension from project-internal imports, field types, and method signatures
-    (${formatNumber(state.graph.edges.length)} edge(s) across ${formatNumber(state.graph.nodes.length)} type(s)).
-    The analyzer does not yet emit inheritance edges or resolved symbol bindings, so
-    <span class="mono">extends</span>/<span class="mono">implements</span> relationships are not represented and
+    Edges are derived from superclasses (<span class="mono">extends</span>), implemented interfaces (<span class="mono">implements</span>),
+    field types, method signatures, and project-internal imports (${formatNumber(state.graph.edges.length)} edge(s) across ${formatNumber(state.graph.nodes.length)} type(s)).
     ${state.graph.ambiguousReferenceCount} ambiguous reference(s) were skipped rather than guessed.
   </div>
 </div>`;
@@ -614,6 +612,8 @@ function renderEndpointTable(state: Extract<DashboardState, { kind: "populated" 
     return '<p class="dim">No request-mapping annotations found on web-layer classes.</p>';
   }
 
+  const hasAnyPath = endpoints.some((e) => e.path !== undefined);
+
   const note = endpointPathsUnavailable
     ? `<div class="callout is-warn" style="margin-top:12px">
          <div class="callout-title">URL paths are not available</div>
@@ -624,13 +624,14 @@ function renderEndpointTable(state: Extract<DashboardState, { kind: "populated" 
   return `
 <div class="table-scroll">
 <table>
-  <thead><tr><th>Verb</th><th>Handler</th><th>Controller</th><th>Returns</th></tr></thead>
+  <thead><tr><th>Verb</th>${hasAnyPath ? "<th>Path</th>" : ""}<th>Handler</th><th>Controller</th><th>Returns</th></tr></thead>
   <tbody>
     ${endpoints
       .map(
         (endpoint) => `
     <tr class="is-clickable" data-open-path="${escapeAttribute(endpoint.sourcePath)}" data-open-line="${endpoint.sourceRange.beginLine}">
       <td><span class="verb verb-${endpoint.httpMethod}">${endpoint.httpMethod}</span></td>
+      ${hasAnyPath ? `<td class="mono ${endpoint.path ? "accent" : "dim"}">${endpoint.path ? escapeHtml(endpoint.path) : "—"}</td>` : ""}
       <td class="mono">${escapeHtml(endpoint.methodName)}(${escapeHtml(endpoint.parameters.join(", "))})</td>
       <td>${escapeHtml(endpoint.controllerSimpleName)}</td>
       <td class="mono dim">${escapeHtml(endpoint.returnType)}</td>

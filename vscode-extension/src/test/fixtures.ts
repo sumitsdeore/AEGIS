@@ -3,6 +3,7 @@ import * as path from "path";
 
 import type {
   AnalyzerResponse,
+  ParsedAnnotation,
   ParsedField,
   ParsedJavaFile,
   ParsedMethod,
@@ -46,6 +47,9 @@ export interface TypeSpec {
   readonly qualifiedName: string;
   readonly kind?: TypeKind;
   readonly annotations?: string[];
+  readonly annotationDetails?: readonly ParsedAnnotation[];
+  readonly superclass?: string | null;
+  readonly interfaces?: string[];
   readonly fields?: ParsedField[];
   readonly methods?: ParsedMethod[];
   /** Imports declared by the file containing this type. */
@@ -65,6 +69,9 @@ export function makeType(spec: TypeSpec): ParsedType {
     sourcePath: `src/main/java/${spec.qualifiedName.split(".").join("/")}.java`,
     modifiers: ["public"],
     annotations: spec.annotations ?? [],
+    annotationDetails: spec.annotationDetails ?? [],
+    superclass: spec.superclass ?? null,
+    interfaces: spec.interfaces ?? [],
     fields: spec.fields ?? [],
     methods: spec.methods ?? [],
     sourceRange: ORIGIN

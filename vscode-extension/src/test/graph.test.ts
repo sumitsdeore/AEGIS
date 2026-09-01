@@ -195,6 +195,36 @@ suite("dependency graph", () => {
     assert(edge!.kinds.length > 0, "every edge must record how it was inferred");
   });
 
+  test("derives inheritance edges for superclass and interfaces", () => {
+    const inheritanceProject = makeProject([
+      { qualifiedName: "app.service.BaseService" },
+      { qualifiedName: "app.service.OrderService", kind: "INTERFACE" },
+      {
+        qualifiedName: "app.service.OrderServiceImpl",
+        superclass: "BaseService",
+        interfaces: ["OrderService"]
+      }
+    ]);
+    const inheritanceGraph = buildDependencyGraph(
+      inheritanceProject,
+      deriveSpringInsights(inheritanceProject),
+      70
+    );
+
+    const extendsEdge = inheritanceGraph.edges.find(
+      (e) => e.from === "app.service.OrderServiceImpl" && e.to === "app.service.BaseService"
+    );
+    const implementsEdge = inheritanceGraph.edges.find(
+      (e) => e.from === "app.service.OrderServiceImpl" && e.to === "app.service.OrderService"
+    );
+
+    assert(extendsEdge !== undefined, "OrderServiceImpl should extend BaseService");
+    assert(extendsEdge!.kinds.includes("extends"), "edge should be labelled with 'extends'");
+
+    assert(implementsEdge !== undefined, "OrderServiceImpl should implement OrderService");
+    assert(implementsEdge!.kinds.includes("implements"), "edge should be labelled with 'implements'");
+  });
+
   test("computes fan-in, fan-out and transitive impact reach", () => {
     assertEqual(nodeFor("app.repository.OrderRepository").fanIn, 1);
     assertEqual(nodeFor("app.web.OrderController").fanIn, 0);

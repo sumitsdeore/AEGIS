@@ -31,8 +31,26 @@ function range(lines) {
   return { beginLine: begin, beginColumn: 1, endLine: begin + lines, endColumn: 1 };
 }
 
+function toAnnotationObj(ann) {
+  if (typeof ann === "string") {
+    return { name: ann, arguments: {} };
+  }
+  return { name: ann.name, arguments: ann.arguments || {} };
+}
+
+function extractName(ann) {
+  return typeof ann === "string" ? ann : ann.name;
+}
+
 function field(name, type, annotations = [], modifiers = ["private", "final"]) {
-  return { name, type, modifiers, annotations, sourceRange: range(1) };
+  return {
+    name,
+    type,
+    modifiers,
+    annotations: annotations.map(extractName),
+    annotationDetails: annotations.map(toAnnotationObj),
+    sourceRange: range(1)
+  };
 }
 
 function method(name, returnType, parameters = [], annotations = [], modifiers = ["public"]) {
@@ -44,7 +62,8 @@ function method(name, returnType, parameters = [], annotations = [], modifiers =
       type: parameterType
     })),
     modifiers,
-    annotations,
+    annotations: annotations.map(extractName),
+    annotationDetails: annotations.map(toAnnotationObj),
     sourceRange: range(6)
   };
 }
@@ -64,7 +83,10 @@ function type(spec) {
     kind: spec.kind ?? "CLASS",
     sourcePath: `${SOURCE_ROOT}/${packageName.split(".").join("/")}/${spec.name}.java`,
     modifiers: spec.modifiers ?? ["public"],
-    annotations: spec.annotations ?? [],
+    annotations: (spec.annotations ?? []).map(extractName),
+    annotationDetails: (spec.annotations ?? []).map(toAnnotationObj),
+    superclass: spec.superclass ?? null,
+    interfaces: spec.interfaces ?? [],
     fields: spec.fields ?? [],
     methods: spec.methods ?? [],
     sourceRange: range(spec.lines ?? 40),
@@ -458,6 +480,7 @@ const types = [
     pkg: "service",
     name: "StripePaymentGateway",
     annotations: ["Component"],
+    interfaces: ["PaymentGateway"],
     fields: [field("apiKey", "String", ["Value"])],
     methods: [
       method("authorize", "String", [["amount", "Money"], ["token", "String"]], ["Override"]),
@@ -485,14 +508,14 @@ const types = [
   type({
     pkg: "web",
     name: "CustomerController",
-    annotations: ["RestController", "RequestMapping"],
+    annotations: ["RestController", { name: "RequestMapping", arguments: { value: "/api/customers" } }],
     fields: [field("customerService", "CustomerService")],
     methods: [
-      method("list", "List<CustomerDto>", [], ["GetMapping"]),
-      method("get", "CustomerDto", [["id", "Long"]], ["GetMapping"]),
-      method("create", "CustomerDto", [["body", "CustomerDto"]], ["PostMapping"]),
-      method("updateAddress", "void", [["id", "Long"], ["address", "Address"]], ["PutMapping"]),
-      method("delete", "void", [["id", "Long"]], ["DeleteMapping"])
+      method("list", "List<CustomerDto>", [], [{ name: "GetMapping", arguments: { value: "" } }]),
+      method("get", "CustomerDto", [["id", "Long"]], [{ name: "GetMapping", arguments: { value: "/{id}" } }]),
+      method("create", "CustomerDto", [["body", "CustomerDto"]], [{ name: "PostMapping", arguments: { value: "" } }]),
+      method("updateAddress", "void", [["id", "Long"], ["address", "Address"]], [{ name: "PutMapping", arguments: { value: "/{id}/address" } }]),
+      method("delete", "void", [["id", "Long"]], [{ name: "DeleteMapping", arguments: { value: "/{id}" } }])
     ],
     refs: [q.CustomerService, q.CustomerDto, q.Address],
     lines: 76
@@ -500,12 +523,12 @@ const types = [
   type({
     pkg: "web",
     name: "OrderController",
-    annotations: ["RestController", "RequestMapping"],
+    annotations: ["RestController", { name: "RequestMapping", arguments: { value: "/api/orders" } }],
     fields: [field("orderService", "OrderService")],
     methods: [
-      method("summary", "OrderSummary", [["id", "Long"]], ["GetMapping"]),
-      method("byStatus", "List<OrderSummary>", [["status", "OrderStatus"]], ["GetMapping"]),
-      method("cancel", "void", [["id", "Long"]], ["PostMapping"])
+      method("summary", "OrderSummary", [["id", "Long"]], [{ name: "GetMapping", arguments: { value: "/{id}" } }]),
+      method("byStatus", "List<OrderSummary>", [["status", "OrderStatus"]], [{ name: "GetMapping", arguments: { value: "" } }]),
+      method("cancel", "void", [["id", "Long"]], [{ name: "PostMapping", arguments: { value: "/{id}/cancel" } }])
     ],
     refs: [q.OrderService, q.OrderSummary, q.OrderStatus],
     lines: 58
@@ -513,12 +536,12 @@ const types = [
   type({
     pkg: "web",
     name: "ProductController",
-    annotations: ["RestController", "RequestMapping"],
+    annotations: ["RestController", { name: "RequestMapping", arguments: { value: "/api/products" } }],
     fields: [field("productService", "ProductService")],
     methods: [
-      method("listActive", "List<Product>", [], ["GetMapping"]),
-      method("bySku", "Product", [["sku", "String"]], ["GetMapping"]),
-      method("patch", "Product", [["sku", "String"], ["body", "Product"]], ["PatchMapping"])
+      method("listActive", "List<Product>", [], [{ name: "GetMapping", arguments: { value: "" } }]),
+      method("bySku", "Product", [["sku", "String"]], [{ name: "GetMapping", arguments: { value: "/{sku}" } }]),
+      method("patch", "Product", [["sku", "String"], ["body", "Product"]], [{ name: "PatchMapping", arguments: { value: "/{sku}" } }])
     ],
     refs: [q.ProductService, q.Product],
     lines: 52
@@ -526,11 +549,11 @@ const types = [
   type({
     pkg: "web",
     name: "CheckoutController",
-    annotations: ["RestController", "RequestMapping"],
+    annotations: ["RestController", { name: "RequestMapping", arguments: { value: "/api/checkout" } }],
     fields: [field("orderService", "OrderService"), field("inventory", "InventoryService")],
     methods: [
-      method("checkout", "OrderSummary", [["request", "CheckoutRequest"]], ["PostMapping"]),
-      method("validate", "void", [["request", "CheckoutRequest"]], ["PostMapping"])
+      method("checkout", "OrderSummary", [["request", "CheckoutRequest"]], [{ name: "PostMapping", arguments: { value: "" } }]),
+      method("validate", "void", [["request", "CheckoutRequest"]], [{ name: "PostMapping", arguments: { value: "/validate" } }])
     ],
     refs: [q.OrderService, q.InventoryService, q.CheckoutRequest, q.OrderSummary],
     lines: 54
@@ -538,14 +561,14 @@ const types = [
   type({
     pkg: "web",
     name: "AdminDashboardController",
-    annotations: ["Controller", "RequestMapping"],
+    annotations: ["Controller", { name: "RequestMapping", arguments: { value: "/admin" } }],
     // Reaches straight into a repository, which the extension flags as a
     // layering violation - deliberately present so the dashboard has one to show.
     fields: [field("reporting", "ReportingService"), field("orderRepository", "OrderRepository")],
     methods: [
-      method("overview", "String", [["model", "Model"]], ["GetMapping"]),
-      method("revenue", "String", [["day", "LocalDate"], ["model", "Model"]], ["GetMapping"]),
-      method("purge", "String", [], ["PostMapping"])
+      method("overview", "String", [["model", "Model"]], [{ name: "GetMapping", arguments: { value: "" } }]),
+      method("revenue", "String", [["day", "LocalDate"], ["model", "Model"]], [{ name: "GetMapping", arguments: { value: "/revenue" } }]),
+      method("purge", "String", [], [{ name: "PostMapping", arguments: { value: "/purge" } }])
     ],
     refs: [q.ReportingService, q.OrderRepository, q.Money],
     lines: 62

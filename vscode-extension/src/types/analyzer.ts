@@ -45,6 +45,12 @@ export interface SourceRange {
   readonly endColumn: number;
 }
 
+/** Mirrors `parser.ParsedAnnotation`. */
+export interface ParsedAnnotation {
+  readonly name: string;
+  readonly arguments: Readonly<Record<string, string>>;
+}
+
 /** Mirrors `parser.ParsedParameter`. */
 export interface ParsedParameter {
   readonly name: string;
@@ -57,6 +63,7 @@ export interface ParsedField {
   readonly type: string;
   readonly modifiers: readonly string[];
   readonly annotations: readonly string[];
+  readonly annotationDetails?: readonly ParsedAnnotation[];
   readonly sourceRange: SourceRange;
 }
 
@@ -67,15 +74,15 @@ export interface ParsedMethod {
   readonly parameters: readonly ParsedParameter[];
   readonly modifiers: readonly string[];
   readonly annotations: readonly string[];
+  readonly annotationDetails?: readonly ParsedAnnotation[];
   readonly sourceRange: SourceRange;
 }
 
 /**
  * Mirrors `parser.ParsedType`.
  *
- * Note: the analyzer does not yet emit `extends`/`implements` relationships, so
- * the extension derives type relationships from imports and member types.
- * See `model/graph.ts`.
+ * Captures type declaration, modifiers, annotations, superclass, implemented
+ * interfaces, member fields, and methods.
  */
 export interface ParsedType {
   readonly qualifiedName: string;
@@ -85,8 +92,10 @@ export interface ParsedType {
   /** Path relative to the project root, as produced by the analyzer. */
   readonly sourcePath: string;
   readonly modifiers: readonly string[];
-  /** Annotation *names* only - the analyzer does not capture annotation arguments. */
   readonly annotations: readonly string[];
+  readonly annotationDetails?: readonly ParsedAnnotation[];
+  readonly superclass?: string | null;
+  readonly interfaces?: readonly string[];
   readonly fields: readonly ParsedField[];
   readonly methods: readonly ParsedMethod[];
   readonly sourceRange: SourceRange;
