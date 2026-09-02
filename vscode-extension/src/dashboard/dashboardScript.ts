@@ -104,11 +104,11 @@ export const DASHBOARD_SCRIPT = `
 
   var RENDER_LIMIT = 140;
   var LAYER_COLORS = {
-    bootstrap: "#c4b5fd",
-    web: "#7dd3fc",
-    service: "#6ee7b7",
-    persistence: "#fcd34d",
-    config: "#fdba74",
+    bootstrap: "#c084fc",
+    web: "#38bdf8",
+    service: "#34d399",
+    persistence: "#fbbf24",
+    config: "#fb923c",
     "cross-cutting": "#94a3b8"
   };
   var LAYER_ORDER = ["bootstrap", "web", "service", "persistence", "config", "cross-cutting"];

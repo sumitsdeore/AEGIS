@@ -202,7 +202,7 @@ suite("dashboard rendering", () => {
   });
 
   test("applies the AEGIS dark palette while deferring to editor typography", () => {
-    assertIncludes(html, "--aegis-bg: #0a0e14", "the dark surface colour must be present");
+    assertIncludes(html, "--aegis-bg: #000000", "the dark surface colour must be present");
     assertIncludes(html, "--aegis-primary: #38bdf8");
     assertIncludes(html, "var(--vscode-font-family", "typography should follow the editor");
     assertIncludes(html, "prefers-contrast: more", "high-contrast themes must be respected");
